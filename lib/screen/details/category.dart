@@ -25,7 +25,7 @@ class Category extends StatelessWidget {
                 ),
                 child: Row(
                   children: <Widget>[
-                    Text("TV - 14"),
+                    Text("TV-14"),
                   ],
                 ),
               ),

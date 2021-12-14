@@ -5,10 +5,8 @@ import 'package:themoviedb_app/screen/details/detail_screen.dart';
 class MovieList extends StatelessWidget {
   const MovieList({
   Key? key,
-  required this.size,
 }) : super(key: key);
 
-final Size size;
 
 @override
 Widget build(BuildContext context) {
@@ -17,19 +15,16 @@ Widget build(BuildContext context) {
     child: Row(
       children:<Widget>[
         MovieItem(
-            size: size,
             movieImg: "assets/images/hawkeye.jpg",
             movieName: "Hawyeke",
             date: "Nov 14, 2021"
         ),
         MovieItem(
-            size: size,
             movieImg: "assets/images/wheeloffortune.jpg",
             movieName: "Wheel of Fortune",
             date: "Sep 19, 1983"
         ),
         MovieItem(
-            size: size,
             movieImg: "assets/images/unfogivable.jpg",
             movieName: "Unforgivable",
             date: "Nov 24, 2021"
@@ -43,13 +38,11 @@ Widget build(BuildContext context) {
 class MovieItem extends StatelessWidget {
   const MovieItem({
     Key? key,
-    required this.size,
     required this.movieImg,
     required this.movieName,
     required this.date,
   }) : super(key: key);
 
-  final Size size;
   final String movieImg;
   final String movieName;
   final String date;
@@ -65,13 +58,13 @@ class MovieItem extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => DetailScreen(size: size),
+                builder: (context) => DetailScreen(),
                 )
           );
         },
         child: Container(
-          width: size.width / 2,
-          height: size.height / 2,
+          width: MediaQuery.of(context).size.width / 2,
+          height: MediaQuery.of(context).size.height / 2,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[

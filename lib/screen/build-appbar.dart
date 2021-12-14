@@ -22,7 +22,10 @@ AppBar buildAppbar() {
     ),
     centerTitle: true,
     actions: <Widget>[
-      IconButton(onPressed: () {}, icon: Image.asset("assets/images/login.jpg"))
+      IconButton(
+          onPressed: () {},
+          icon: Image.asset("assets/images/login.jpg")
+      )
     ],
   );
 }
