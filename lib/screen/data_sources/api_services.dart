@@ -44,4 +44,24 @@ class ApiServices{
           }
     });
   }
+
+
+
+  Future <List<Actor>> fetchActor(String type, String id){
+    return http
+        .get(ApiUrls().API_ACTOR(type, id))
+        .then((http.Response response){
+      final String jsonBody = response.body;
+      int statusCode = response.statusCode;
+      if(jsonBody == null || statusCode != 200){
+        print("Load actor error");
+        throw new Exception(response.reasonPhrase);
+      } else {
+        final JsonDecoder decoder = new JsonDecoder();
+        final actorListContainer = decoder.convert(jsonBody);
+        final List actorList = actorListContainer['cast'];
+        return actorList.map((actorDetail) => new Actor.fromJson(actorDetail)).toList();
+      }
+    });
+  }
 }

@@ -80,14 +80,15 @@ class TvshowItem extends StatelessWidget {
                       poster_path: image_link + "w200" + tvshow!.poster_path.toString(),
                       first_air_date: tvshow!.first_air_date.toString(),
                       name: tvshow!.name.toString(),
-                      overview: tvshow!.overview.toString()
+                      overview: tvshow!.overview.toString(),
+                      type: "tv",
                   )
               )
           );
         },
         child: Container(
           width: MediaQuery.of(context).size.width / 2,
-          height: MediaQuery.of(context).size.height / 2,
+          height: MediaQuery.of(context).size.height / 3,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[

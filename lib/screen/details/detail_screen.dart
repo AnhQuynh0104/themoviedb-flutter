@@ -15,10 +15,11 @@ class DetailScreen extends StatelessWidget {
     required this.first_air_date,
     required this.name,
     required this.overview,
+    required this.type,
   }) : super(key: key);
 
   final int id;
-  final String backdrop_path, poster_path,first_air_date, name, overview;
+  final String backdrop_path, poster_path,first_air_date, name, overview, type;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +33,7 @@ class DetailScreen extends StatelessWidget {
               TitleMovie(name: name),
               Category(),
               Description(overview: overview,),
-              ActorList(id: id)
+              ActorList(id: id, type: type,),
             ],
           ),
         )

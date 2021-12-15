@@ -1,44 +1,22 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-
 import 'package:flutter/material.dart';
 import 'package:themoviedb_app/constants.dart';
+import 'package:themoviedb_app/screen/data_sources/api_services.dart';
 import 'package:themoviedb_app/screen/models/actor.dart';
-
-final Uri API_ACTORS = Uri.parse("https://api.themoviedb.org/3/movie/580489/credits?api_key=f46d76550cd8316769efdd6afe103c5b&language=en-US" );
-
-Future <List<Actor>> fetchActor(){
-  return http
-      .get(API_ACTORS)
-      .then((http.Response response){
-    final String jsonBody = response.body;
-    int statusCode = response.statusCode;
-    if(statusCode != 200 || jsonBody == null){
-      print(response.reasonPhrase);
-      throw new Exception("Error loaded api actor");
-    } else {
-      print("Load api actor");
-      final JsonDecoder decoder = new JsonDecoder();
-      final actorListContainer = decoder.convert(jsonBody);
-      final List actorList = actorListContainer['cast'];
-      return actorList.map((actorDetail) => new Actor.fromJson(actorDetail)).toList();
-    }
-  });
-}
 
 class ActorList extends StatefulWidget {
   const ActorList({
     Key? key,
-    required this.id
+    required this.id,
+    required this.type
   }) : super(key: key);
 
   final int id;
+  final String type;
   @override
   _ActorListState createState() => _ActorListState();
 }
 
 class _ActorListState extends State<ActorList> {
-
 
   @override
   Widget build(BuildContext context) {
@@ -60,8 +38,10 @@ class _ActorListState extends State<ActorList> {
             child: Row(
               children: <Widget>[
                 Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height / 2,
                   child: FutureBuilder <List<Actor>>(
-                    future: fetchActor(),
+                    future: ApiServices().fetchActor(widget.type.toString(), widget.id.toString()),
                     builder: (context, snapshot){
                       if((!snapshot.hasData) || (snapshot.hasError)){
                         return Container(
@@ -107,7 +87,7 @@ class ActorInfo extends StatelessWidget {
         children: <Widget>[
           Container(
             width: size.width * 0.35,
-            height: size.height * 0.4,
+            height: size.height * 0.7,
             margin: EdgeInsets.only(
                 top: kDefaultPadding,
                 right: kDefaultPadding
@@ -115,13 +95,19 @@ class ActorInfo extends StatelessWidget {
             decoration: BoxDecoration(
                 border: Border.all(
                     color: Colors.grey
-                )
+                ),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(15),
+                  bottomRight: Radius.circular(15)
+                ),
             ),
             child: Column(
               children: [
-                Image.network(image_link + "w200" + actor!.profile_path.toString()),
+                Image.network(
+                  image_link + "w200" + actor!.profile_path.toString(),
+                ),
                 Padding(
-                  padding: EdgeInsets.all(kDefaultPadding / 2),
+                  padding: EdgeInsets.all(kDefaultPadding / 3),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
@@ -133,7 +119,7 @@ class ActorInfo extends StatelessWidget {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.symmetric(vertical: kDefaultPadding / 2),
+                        padding: const EdgeInsets.symmetric(vertical: kDefaultPadding / 3),
                         child: Text(
                             actor!.character.toString()
                         ),
@@ -155,4 +141,3 @@ class ActorInfo extends StatelessWidget {
     );
   }
 }
-
