@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:themoviedb_app/screen/models/actor.dart';
+import 'package:themoviedb_app/screen/models/movie.dart';
 import 'package:themoviedb_app/screen/models/tvshow.dart';
 import 'dart:convert';
 import 'dart:convert' as json;
@@ -25,5 +26,22 @@ class ApiServices{
     });
   }
 
-
+  Future <List<Movie>> fetchMovie(){
+    return http
+        .get(ApiUrls().API_POPULAR_MOVIES)
+        .then((http.Response response){
+          final String jsonBody = response.body;
+          int statusCode = response.statusCode;
+          if(statusCode != 200 || jsonBody == null){
+            print(response.reasonPhrase);
+            throw new Exception("Error loaded api");
+          } else {
+            print("Load api");
+            final JsonDecoder decoder = new JsonDecoder();
+            final movieListContainer = decoder.convert(jsonBody);
+            final List movieList = movieListContainer['results'];
+            return movieList.map((movieDetail) => new Movie.fromJson(movieDetail)).toList();
+          }
+    });
+  }
 }

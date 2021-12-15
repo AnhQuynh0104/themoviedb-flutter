@@ -4,7 +4,10 @@ import 'package:themoviedb_app/constants.dart';
 class Description extends StatelessWidget {
   const Description({
     Key? key,
+    required this.overview,
   }) : super(key: key);
+
+  final String overview;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +37,7 @@ class Description extends StatelessWidget {
             ),
           ),
           Text(
-            "Cũng giống như Captain America, Black Widow hay Iron Man, Hawkeye đã rút lui khỏi Avengers. Vì vậy, anh cần có một người kế nhiệm. Ở series Hawkeye, người kế nhiệm của anh chính thức ra mắt khán giả, cô Kate Bishop (Hailee Steinfeld) - một nữ cung thủ được Hawkeye Clint Barton huấn luyện để thay thế mình trong sự nghiệp siêu anh hùng.",
+            overview,
             style: TextStyle(
                 fontSize: 18
             ),

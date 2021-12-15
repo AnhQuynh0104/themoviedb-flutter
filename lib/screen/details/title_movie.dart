@@ -4,7 +4,10 @@ import 'package:themoviedb_app/constants.dart';
 class TitleMovie extends StatelessWidget {
   const TitleMovie({
     Key? key,
+    this.name = "",
   }) : super(key: key);
+
+  final String name;
 
   @override
   Widget build(BuildContext context) {
@@ -14,7 +17,7 @@ class TitleMovie extends StatelessWidget {
         text: TextSpan(
             children: <TextSpan>[
               TextSpan(
-                  text: "Thần Tiễn - Hawkeye",
+                  text: name,
                   style: TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.black,

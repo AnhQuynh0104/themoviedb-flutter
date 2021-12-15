@@ -1,51 +1,64 @@
 import 'package:flutter/material.dart';
 import 'package:themoviedb_app/constants.dart';
+import 'package:themoviedb_app/screen/data_sources/api_services.dart';
 import 'package:themoviedb_app/screen/details/detail_screen.dart';
-
-class MovieList extends StatelessWidget {
-  const MovieList({
-  Key? key,
-}) : super(key: key);
+import 'package:themoviedb_app/screen/models/movie.dart';
 
 
-@override
-Widget build(BuildContext context) {
-  return SingleChildScrollView(
-    scrollDirection: Axis.horizontal,
-    child: Row(
-      children:<Widget>[
-        MovieItem(
-            movieImg: "assets/images/hawkeye.jpg",
-            movieName: "Hawyeke",
-            date: "Nov 14, 2021"
-        ),
-        MovieItem(
-            movieImg: "assets/images/wheeloffortune.jpg",
-            movieName: "Wheel of Fortune",
-            date: "Sep 19, 1983"
-        ),
-        MovieItem(
-            movieImg: "assets/images/unfogivable.jpg",
-            movieName: "Unforgivable",
-            date: "Nov 24, 2021"
-        )
-      ],
-    ),
-  );
+class MovieList extends StatefulWidget {
+  const MovieList({Key? key}) : super(key: key);
+
+  @override
+  _MovieListState createState() => _MovieListState();
 }
-}
+
+class _MovieListState extends State<MovieList> {
+  @override
+    Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+      return SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          children:<Widget>[
+            Container(
+              width: size.width,
+              height: size.height / 2,
+              child: FutureBuilder <List<Movie>>(
+                future: ApiServices().fetchMovie(),
+                builder: (context, snapshot){
+                  if((!snapshot.hasData)|| (snapshot.hasError)){
+                    return Container(
+                      child: Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    );
+                  }
+                  List<Movie>? movieList = snapshot.data;
+                  return ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      shrinkWrap: true,
+                      itemBuilder: (BuildContext context, int index){
+                        return MovieItem(
+                          movie: movieList![index]
+                        );
+                      }
+                  );
+                },
+              ),
+            )
+          ],
+        ),
+      );
+    }
+  }
+
+
 
 class MovieItem extends StatelessWidget {
-  const MovieItem({
-    Key? key,
-    required this.movieImg,
-    required this.movieName,
-    required this.date,
-  }) : super(key: key);
 
-  final String movieImg;
-  final String movieName;
-  final String date;
+  Movie? movie;
+
+  MovieItem({ this.movie });
 
   @override
   Widget build(BuildContext context) {
@@ -58,8 +71,15 @@ class MovieItem extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => DetailScreen(),
-                )
+                builder: (context) => DetailScreen(
+                    id: movie?.id ?? 0,
+                    backdrop_path: image_link + "original" + movie!.backdrop_path.toString(),
+                    poster_path: image_link + "w200" + movie!.poster_path.toString(),
+                    first_air_date: movie!.release_date.toString() ,
+                    name: movie!.title.toString(),
+                    overview: movie!.overview.toString()
+                ),
+            )
           );
         },
         child: Container(
@@ -68,11 +88,11 @@ class MovieItem extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Image.asset(movieImg),
+              Image.network(image_link + "w200" + movie!.poster_path.toString()),
               Padding(
                 padding: const EdgeInsets.only(top: kDefaultPadding),
                 child: Text(
-                  movieName,
+                  movie!.title.toString(),
                   style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold
@@ -80,7 +100,7 @@ class MovieItem extends StatelessWidget {
                 ),
               ),
               Text(
-                date,
+               movie!.release_date.toString(),
                 style: TextStyle(
                   fontSize: 12,
                 ),

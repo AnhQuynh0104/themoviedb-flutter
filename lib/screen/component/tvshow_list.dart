@@ -23,7 +23,7 @@ class _TvshowListState extends State<TvshowList> {
         children:<Widget>[
           Container(
             height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.height / 2,
             child: FutureBuilder <List<Tvshow>>(
               future: ApiServices().fetchTvshows(),
               builder: (context, snapshot){
@@ -73,7 +73,15 @@ class TvshowItem extends StatelessWidget {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => DetailScreen(),
+                builder: (context) =>
+                  DetailScreen(
+                      id: tvshow?.id ?? 0,
+                      backdrop_path: image_link + "original" + tvshow!.backdrop_path.toString(),
+                      poster_path: image_link + "w200" + tvshow!.poster_path.toString(),
+                      first_air_date: tvshow!.first_air_date.toString(),
+                      name: tvshow!.name.toString(),
+                      overview: tvshow!.overview.toString()
+                  )
               )
           );
         },

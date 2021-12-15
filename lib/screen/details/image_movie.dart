@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:themoviedb_app/constants.dart';
 
 class ImageMovie extends StatelessWidget {
   const ImageMovie({
     Key? key,
     required this.size,
+    this.backdrop_path = "",
+    this.poster_path = "",
   }) : super(key: key);
 
   final Size size;
+  final String backdrop_path, poster_path;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +20,7 @@ class ImageMovie extends StatelessWidget {
           height: size.height / 5,
           decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage("assets/images/hawyeke_bg.jpg"),
+                  image: NetworkImage(backdrop_path),
                   fit: BoxFit.cover
               )
           ),
@@ -29,7 +33,7 @@ class ImageMovie extends StatelessWidget {
               height: size.height / 6,
               decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage("assets/images/hawkeye.jpg")
+                      image: NetworkImage(poster_path)
                   ),
                   borderRadius: BorderRadius.circular(15)
               ),
