@@ -3,7 +3,6 @@ import 'package:themoviedb_app/constants.dart';
 import 'package:themoviedb_app/screen/homescreen.dart';
 import 'constants.dart';
 
-
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -21,5 +20,4 @@ class MyApp extends StatelessWidget {
 
     );
   }
-
 }

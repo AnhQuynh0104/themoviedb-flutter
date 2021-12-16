@@ -64,8 +64,6 @@ class MovieItem extends StatelessWidget {
     this.movie,
   });
 
-  //String type ="";
-
   @override
   Widget build(BuildContext context) {
     return Padding(

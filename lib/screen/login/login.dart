@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:themoviedb_app/screen/build-appbar.dart';
-import 'component/body.dart';
+import 'package:themoviedb_app/screen/login/details/body.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
-
+class Login extends StatelessWidget {
+  const Login({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
