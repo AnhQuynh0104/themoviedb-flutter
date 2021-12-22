@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:themoviedb_app/constants.dart';
-import 'package:themoviedb_app/screen/data_sources/api_services.dart';
+import 'package:themoviedb_app/data_sources/api_services.dart';
+import 'package:themoviedb_app/models/movie.dart';
 import 'package:themoviedb_app/screen/details/detail_screen.dart';
-import 'package:themoviedb_app/screen/models/movie.dart';
 
 
 class MovieList extends StatefulWidget {

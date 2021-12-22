@@ -1,10 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:themoviedb_app/constants.dart';
 
-class Input extends StatelessWidget {
-  const Input({
-    Key? key,
-  }) : super(key: key);
+class Input extends StatefulWidget {
+  const Input({Key? key}) : super(key: key);
+
+  @override
+  _InputState createState() => _InputState();
+}
+
+class _InputState extends State<Input> {
+
+  final loginController = TextEditingController();
+
+  void dispose(){
+    loginController.dispose();
+    super.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +33,7 @@ class Input extends StatelessWidget {
                     ),
                   ),
                   TextField(
+                      controller: loginController,
                       decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Color(0xFF2BC0E8)),
@@ -58,6 +71,6 @@ class Input extends StatelessWidget {
             )
         ),
       ],
-    );
+    );;
   }
 }

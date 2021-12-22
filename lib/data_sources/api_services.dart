@@ -1,12 +1,13 @@
 import 'package:http/http.dart' as http;
-import 'package:themoviedb_app/screen/models/actor.dart';
-import 'package:themoviedb_app/screen/models/movie.dart';
-import 'package:themoviedb_app/screen/models/tvshow.dart';
+import 'package:themoviedb_app/models/actor.dart';
+import 'package:themoviedb_app/models/movie.dart';
+import 'package:themoviedb_app/models/tvshow.dart';
 import 'dart:convert';
 import 'dart:convert' as json;
 import 'api_urls.dart';
 
 class ApiServices{
+
   Future<List<Tvshow>> fetchTvshows(){
     return http
         .get(ApiUrls().API_POPULAR_TVSHOWS)
@@ -64,5 +65,7 @@ class ApiServices{
       }
     });
   }
+
+
 }
 
