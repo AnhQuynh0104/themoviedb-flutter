@@ -1,12 +1,15 @@
 import 'package:http/http.dart' as http;
 import 'package:themoviedb_app/models/actor.dart';
 import 'package:themoviedb_app/models/movie.dart';
+import 'package:themoviedb_app/models/request_token.dart';
 import 'package:themoviedb_app/models/tvshow.dart';
 import 'dart:convert';
 import 'dart:convert' as json;
 import 'api_urls.dart';
 
 class ApiServices{
+
+  var client = http.Client();
 
   Future<List<Tvshow>> fetchTvshows(){
     return http
@@ -46,8 +49,6 @@ class ApiServices{
     });
   }
 
-
-
   Future <List<Actor>> fetchActor(String type, String id){
     return http
         .get(ApiUrls().API_ACTOR(type, id))
@@ -66,6 +67,35 @@ class ApiServices{
     });
   }
 
+  Future<String> getRequestToken(){
+    return http
+        .get(ApiUrls().REQUEST_TOKEN)
+        .then((http.Response response) {
+      final String jsonBody = response.body;
+      final JsonDecoder decoder = new JsonDecoder();
+      final requestTokenContainer = decoder.convert(jsonBody);
+      final String requestToken = requestTokenContainer['request_token'];
+      print("get token: " + requestToken);
+      return requestToken;
+    });
+  }
 
+  Future<RequestToken> validateWithLogin(Map<String, dynamic> requestBody) async{
+    final response = await http.post(
+        ApiUrls().VALIDATE_WITH_LOGIN,
+        body: requestBody
+    );
+    print("validate login: " + response.body);
+    return RequestToken.fromJson({"response": response.body});
+  }
+
+  Future<String> createSession(Map<String, dynamic> requestBody) async{
+    final response = await http.post(
+        ApiUrls().SESSION,
+        body: requestBody
+    );
+    print("create session: " + response.body);
+    //return response['success'] ? response['session_id'] : null;
+    return response.body;
+  }
 }
-

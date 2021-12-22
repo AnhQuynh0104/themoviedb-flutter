@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:themoviedb_app/constants.dart';
 import 'package:themoviedb_app/data_sources/api_methods.dart';
+import 'package:themoviedb_app/data_sources/api_services.dart';
 import 'package:themoviedb_app/screen/homescreen.dart';
 import 'package:themoviedb_app/screen/login/details/title_and_intro.dart';
 
@@ -113,17 +114,17 @@ class _BodyState extends State<Body> {
             child: TextButton(
               onPressed: () async {
                 // 1. lay token
-                final token = await ApiMethods().getRequestToken();
+                final token = await ApiServices().getRequestToken();
 
                 // 2. dung token va thong tin user nhap de dang nhap
-                final requestToken = await ApiMethods().validateWithLogin({
+                final requestToken = await ApiServices().validateWithLogin({
                   'request_token': token,
                   'username': usernameController.text,
                   'password': passwordController.text
                 });
 
                 // 3. luu lai token va chuyen den man home
-                final session = await ApiMethods().createSession({
+                final session = await ApiServices().createSession({
                   'success': true,
                   'session_id': requestToken
                 });
