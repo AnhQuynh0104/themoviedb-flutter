@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:themoviedb_app/constants.dart';
-import 'package:themoviedb_app/data_sources/api_methods.dart';
 import 'package:themoviedb_app/data_sources/api_services.dart';
 import 'package:themoviedb_app/screen/homescreen.dart';
 import 'package:themoviedb_app/screen/login/details/title_and_intro.dart';
@@ -125,8 +124,7 @@ class _BodyState extends State<Body> {
 
                 // 3. luu lai token va chuyen den man home
                 final session = await ApiServices().createSession({
-                  'success': true,
-                  'session_id': requestToken
+                  'request_token': token
                 });
 
                 //enableSignIn ? (){
