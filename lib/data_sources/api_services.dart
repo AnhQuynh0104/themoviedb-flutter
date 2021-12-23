@@ -89,13 +89,12 @@ class ApiServices{
     return RequestToken.fromJson({"response": response.body});
   }
 
-  Future<String> createSession(Map<String, dynamic> requestBody) async{
+  Future<Map<String, dynamic>> createSession(Map<String, dynamic> requestBody) async{
     final response = await http.post(
         ApiUrls().SESSION,
         body: requestBody
     );
     print("create session: " + response.body);
-    //return response.body['success'] ? response.body['session_id'] : null;
-    return response.body;
+    return jsonDecode(response.body);
   }
 }

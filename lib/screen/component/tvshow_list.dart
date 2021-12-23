@@ -21,8 +21,8 @@ class _TvshowListState extends State<TvshowList> {
       child: Row(
         children:<Widget>[
           Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.height / 2,
+            height: MediaQuery.of(context).size.height / 2,
+            width: MediaQuery.of(context).size.width,
             child: FutureBuilder <List<Tvshow>>(
               future: ApiServices().fetchTvshows(),
               builder: (context, snapshot){

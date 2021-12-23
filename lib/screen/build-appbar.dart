@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:themoviedb_app/constants.dart';
+import 'package:themoviedb_app/screen/homescreen.dart';
 import 'package:themoviedb_app/screen/login/login.dart';
 
 
@@ -37,10 +39,34 @@ class LoginButton extends StatelessWidget {
     return Container(
       child: IconButton(
           onPressed: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => Login()
+            showDialog(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                  title: Text(
+                    'Do you want to logout?'
+                  ),
+                  content: Text('abc'),
+                  actions: [
+                    TextButton(
+                        onPressed: (){
+                          Navigator.of(context, rootNavigator: true).pop('dialog');
+                        },
+                        child: Text('CANCEL')
+                    ),
+                    TextButton(
+                        onPressed: () async {
+                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                          await prefs.clear();
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext context) => Login()
+                              )
+                          );
+                        },
+                        child: Text('ACCEPT')
+                    )
+                  ],
                 )
             );
           },

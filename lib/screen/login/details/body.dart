@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:themoviedb_app/constants.dart';
 import 'package:themoviedb_app/data_sources/api_services.dart';
 import 'package:themoviedb_app/screen/homescreen.dart';
@@ -14,7 +15,6 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
-  bool enableSignIn = false;
 
   @override
   void dispose() {
@@ -25,29 +25,15 @@ class _BodyState extends State<Body> {
 
   void initState() {
     super.initState();
-    usernameController.addListener(() {
-      setState(() {
-        enableSignIn = usernameController.text.isNotEmpty &&
-            passwordController.text.isNotEmpty;
-      });
-    });
-    passwordController.addListener(() {
-      setState(() {
-        enableSignIn = usernameController.text.isNotEmpty &&
-            passwordController.text.isNotEmpty;
-      });
-    });
   }
 
-// import 'package:themoviedb_app/screen/login/details/input.dart';
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-              padding: EdgeInsets.symmetric(
-                  vertical: kDefaultPadding * 1.5, horizontal: kDefaultPadding),
+              padding: EdgeInsets.symmetric(vertical: kDefaultPadding * 1.5, horizontal: kDefaultPadding),
               child: Column(
                 children: <Widget>[
                   TitleAndIntro(),
@@ -57,25 +43,28 @@ class _BodyState extends State<Body> {
                           child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  bottom: kDefaultPadding / 4),
-                              child: Text(
-                                "Username",
-                              ),
-                            ),
-                            TextField(
-                                controller: usernameController,
-                                decoration: InputDecoration(
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Color(0xFF2BC0E8)),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      bottom: kDefaultPadding / 4),
+                                  child: Text(
+                                    "Username",
                                   ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(color: Colors.grey),
-                                  ),
-                                )),
-                          ])),
+                                ),
+                                TextField(
+                                    controller: usernameController,
+                                    decoration: InputDecoration(
+                                      focusedBorder: OutlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Color(0xFF2BC0E8)),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: BorderSide(color: Colors.grey),
+                                      ),
+                                    )
+                                ),
+                            ]
+                          )
+                      ),
                       Padding(
                           padding: EdgeInsets.only(top: kDefaultPadding),
                           child: Column(
@@ -112,6 +101,7 @@ class _BodyState extends State<Body> {
             padding: const EdgeInsets.only(left: kDefaultPadding),
             child: TextButton(
               onPressed: () async {
+
                 // 1. lay token
                 final token = await ApiServices().getRequestToken();
 
@@ -127,10 +117,16 @@ class _BodyState extends State<Body> {
                   'request_token': token
                 });
 
-                //enableSignIn ? (){
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => HomeScreen()));
-                //} : null;
+                print('success:' + session['success'].toString() + '\n' + 'id: ' + session['session_id']);
+
+                final prefs = await SharedPreferences.getInstance();
+                prefs.setString('sessionId', session['session_id']);
+
+
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (BuildContext context) => HomeScreen())
+                  );
               },
               style: ButtonStyle(
                   backgroundColor:
@@ -141,10 +137,11 @@ class _BodyState extends State<Body> {
                 style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
-                    fontSize: 16),
+                    fontSize: 16
+                ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );
