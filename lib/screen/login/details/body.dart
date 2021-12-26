@@ -29,6 +29,7 @@ class _BodyState extends State<Body> {
 
   Widget build(BuildContext context) {
     return SingleChildScrollView(
+      padding: EdgeInsets.only(top: kDefaultPadding * 3),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -37,6 +38,38 @@ class _BodyState extends State<Body> {
               child: Column(
                 children: <Widget>[
                   TitleAndIntro(),
+                  Container(
+                    margin: EdgeInsets.only(bottom: kDefaultPadding),
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.black)
+                    ),
+                    child: Column(
+                        children: <Widget>[
+                          Container(
+                            width: MediaQuery.of(context).size.width,
+                            padding: EdgeInsets.symmetric(vertical: kDefaultPadding),
+                            decoration: BoxDecoration(
+                              color: Color(0xFFD40242)
+                            ),
+                            child: Text(
+                                'There was a problem',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                  fontSize: 20
+                                ),
+                            ),
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(vertical: kDefaultPadding),
+                            child: Text(
+                              'We could not find your username.'
+                            ),
+                          )
+                        ]
+                      )
+                  ),
                   Column(
                     children: [
                       Container(
@@ -47,7 +80,7 @@ class _BodyState extends State<Body> {
                                   padding: const EdgeInsets.only(
                                       bottom: kDefaultPadding / 4),
                                   child: Text(
-                                    "Username",
+                                    'Username',
                                   ),
                                 ),
                                 TextField(
@@ -61,8 +94,8 @@ class _BodyState extends State<Body> {
                                         borderSide: BorderSide(color: Colors.grey),
                                       ),
                                     )
-                                ),
-                            ]
+                                  ),
+                              ]
                           )
                       ),
                       Padding(
@@ -74,7 +107,7 @@ class _BodyState extends State<Body> {
                                   padding: const EdgeInsets.only(
                                       bottom: kDefaultPadding / 4),
                                   child: Text(
-                                    "Password",
+                                    'Password',
                                   ),
                                 ),
                                 TextField(
@@ -82,11 +115,11 @@ class _BodyState extends State<Body> {
                                     decoration: InputDecoration(
                                       focusedBorder: OutlineInputBorder(
                                         borderSide: BorderSide(
-                                            color: Color(0xFF2BC0E8)),
+                                            color: Color(0xFF2BC0E8)
+                                        ),
                                       ),
                                       enabledBorder: OutlineInputBorder(
-                                        borderSide:
-                                            BorderSide(color: Colors.grey),
+                                        borderSide: BorderSide(color: Colors.grey),
                                       ),
                                     )
                                 ),
@@ -96,7 +129,8 @@ class _BodyState extends State<Body> {
                     ],
                   )
                 ],
-              )),
+              )
+          ),
           Padding(
             padding: const EdgeInsets.only(left: kDefaultPadding),
             child: TextButton(
@@ -117,22 +151,20 @@ class _BodyState extends State<Body> {
                   'request_token': token
                 });
 
-                print('success:' + session['success'].toString() + '\n' + 'id: ' + session['session_id']);
-
                 final prefs = await SharedPreferences.getInstance();
                 prefs.setString('sessionId', session['session_id']);
 
-
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (BuildContext context) => HomeScreen())
-                  );
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (BuildContext context) => HomeScreen())
+                );
               },
               style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all(Color(0xFF2BC0E8))),
+                      MaterialStateProperty.all(Color(0xFF2BC0E8))
+              ),
               child: Text(
-                "Đăng nhập",
+                'Login',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     color: Colors.white,

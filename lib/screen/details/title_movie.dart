@@ -4,7 +4,7 @@ import 'package:themoviedb_app/constants.dart';
 class TitleMovie extends StatelessWidget {
   const TitleMovie({
     Key? key,
-    this.name = "",
+    required this.name,
   }) : super(key: key);
 
   final String name;
@@ -25,7 +25,7 @@ class TitleMovie extends StatelessWidget {
                   )
               ),
               TextSpan(
-                  text: "  (2021)",
+                  text: '  (2021)',
                   style: TextStyle(
                       color: kPrimaryColor
                   )
@@ -36,4 +36,3 @@ class TitleMovie extends StatelessWidget {
     );
   }
 }
-

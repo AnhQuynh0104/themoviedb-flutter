@@ -18,7 +18,7 @@ class Description extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            "This holiday season, the best gifts come with a bow.",
+            'This holiday season, the best gifts come with a bow.',
             style: TextStyle(
                 fontStyle: FontStyle.italic,
                 color: Colors.grey,
@@ -28,7 +28,7 @@ class Description extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: kDefaultPadding),
             child: Text(
-              "Overview",
+              'Overview',
               style: TextStyle(
                   letterSpacing: 1,
                   fontWeight: FontWeight.bold,
@@ -45,7 +45,7 @@ class Description extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: kDefaultPadding),
             child: Text(
-              "Jonathan Igla",
+              'Jonathan Igla',
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 18
@@ -53,7 +53,7 @@ class Description extends StatelessWidget {
             ),
           ),
           Text(
-              "Creator"
+              'Creator'
           )
         ],
       ),

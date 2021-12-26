@@ -29,7 +29,7 @@ class _InputState extends State<Input> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: kDefaultPadding / 4),
                     child: Text(
-                      "Username",
+                      'Username',
                     ),
                   ),
                   TextField(
@@ -54,7 +54,7 @@ class _InputState extends State<Input> {
                   Padding(
                     padding: const EdgeInsets.only(bottom: kDefaultPadding / 4),
                     child: Text(
-                      "Password",
+                      'Password',
                     ),
                   ),
                   TextField(
@@ -71,6 +71,6 @@ class _InputState extends State<Input> {
             )
         ),
       ],
-    );;
+    );
   }
 }

@@ -26,7 +26,7 @@ class _ActorListState extends State<ActorList> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Text(
-            "Series Cast",
+            'Series Cast',
             style: TextStyle(
                 letterSpacing: 1,
                 fontWeight: FontWeight.bold,
@@ -104,7 +104,7 @@ class ActorInfo extends StatelessWidget {
             child: Column(
               children: [
                 Image.network(
-                  image_link + "w200" + actor!.profile_path.toString(),
+                  image_link + 'w200' + actor!.profile_path.toString(),
                 ),
                 Padding(
                   padding: EdgeInsets.all(kDefaultPadding / 3),
@@ -125,7 +125,7 @@ class ActorInfo extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "6 Episodes",
+                        '6 Episodes',
                         style: TextStyle(
                             color: Colors.grey
                         ),

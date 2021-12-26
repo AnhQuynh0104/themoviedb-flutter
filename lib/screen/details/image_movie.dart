@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:themoviedb_app/constants.dart';
 
 class ImageMovie extends StatelessWidget {
   const ImageMovie({
     Key? key,
     required this.size,
-    this.backdrop_path = "",
-    this.poster_path = "",
+    required this.backdrop_path,
+    required this.poster_path,
   }) : super(key: key);
 
   final Size size;

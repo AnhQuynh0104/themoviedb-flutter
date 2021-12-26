@@ -16,7 +16,7 @@ class MediaDiscover extends StatelessWidget {
       height: size.height / 3,
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: NetworkImage("https://www.themoviedb.org/t/p/w880_and_h600_multi_faces_filter(duotone,032541,01b4e4)/8bcoRX3hQRHufLPSDREdvr3YMXx.jpg"),
+          image: NetworkImage('https://www.themoviedb.org/t/p/w880_and_h600_multi_faces_filter(duotone,032541,01b4e4)/8bcoRX3hQRHufLPSDREdvr3YMXx.jpg'),
           fit: BoxFit.cover,
         ),
       ),
@@ -26,7 +26,7 @@ class MediaDiscover extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: const <Widget>[
             Text(
-              "Welcome",
+              'Welcome',
               style: TextStyle(
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -34,7 +34,7 @@ class MediaDiscover extends StatelessWidget {
               ),
             ),
             Text(
-                "Millions of movies, TV shows and people to discover. Explore now.",
+                'Millions of movies, TV shows and people to discover. Explore now.',
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 30,

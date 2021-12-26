@@ -25,7 +25,7 @@ class Category extends StatelessWidget {
                 ),
                 child: Row(
                   children: <Widget>[
-                    Text("TV-14"),
+                    Text('TV-14'),
                   ],
                 ),
               ),
@@ -33,14 +33,14 @@ class Category extends StatelessWidget {
                 "  .  ",
               ),
               Text(
-                  "50 min"
+                  '50 min'
               )
             ],
           ),
           Padding(
             padding: const EdgeInsets.only(top: kDefaultPadding / 2),
             child: Text(
-                "Action & Adventure, Phim Chính Kịch"
+                'Action & Adventure, Phim Chính Kịch'
             ),
           )
         ],

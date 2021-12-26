@@ -75,12 +75,12 @@ class TvshowItem extends StatelessWidget {
                 builder: (context) =>
                   DetailScreen(
                       id: tvshow?.id ?? 0,
-                      backdrop_path: image_link + "original" + tvshow!.backdrop_path.toString(),
-                      poster_path: image_link + "w200" + tvshow!.poster_path.toString(),
+                      backdrop_path: image_link + 'original' + tvshow!.backdrop_path.toString(),
+                      poster_path: image_link + 'w200' + tvshow!.poster_path.toString(),
                       first_air_date: tvshow!.first_air_date.toString(),
                       name: tvshow!.name.toString(),
                       overview: tvshow!.overview.toString(),
-                      type: "tv",
+                      type: 'tv',
                   )
               )
           );
@@ -91,7 +91,7 @@ class TvshowItem extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Image.network( image_link + "w200" + tvshow!.poster_path.toString()),
+              Image.network( image_link + 'w200' + tvshow!.poster_path.toString()),
               Padding(
                 padding: const EdgeInsets.only(top: kDefaultPadding),
                 child: Text(

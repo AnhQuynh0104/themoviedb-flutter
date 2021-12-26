@@ -16,13 +16,13 @@ class Body extends StatelessWidget {
         children: <Widget>[
           MediaDiscover(size: size),
           TitleWithButton(
-            title: "What's Popular",
-            buttonName: "On TV",
+            title: 'What\'s Popular',
+            buttonName: 'On TV',
           ),
           MovieList(),
           TitleWithButton(
-            title: "Trending",
-            buttonName: "Today",
+            title: 'Trending',
+            buttonName: 'Today',
           ),
           TvshowList()
         ],

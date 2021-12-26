@@ -19,13 +19,13 @@ class ApiServices{
           final int statusCode = response.statusCode;
           if(statusCode != 200 || jsonBody == null){
             print(response.reasonPhrase);
-            throw new Exception("Error loaded api");
+            throw Exception('Error loaded api tvshow');
           } else {
-            print("Loaded api");
-            final JsonDecoder decoder = new JsonDecoder();
+            print('Load api tvshow');
+            final JsonDecoder decoder = JsonDecoder();
             final tvshowListContainer = decoder.convert(jsonBody);
             final List tvshowList = tvshowListContainer['results'];
-            return tvshowList.map((tvshowDetail) => new Tvshow.fromJson(tvshowDetail)).toList();
+            return tvshowList.map((tvshowDetail) => Tvshow.fromJson(tvshowDetail)).toList();
           }
     });
   }
@@ -38,13 +38,13 @@ class ApiServices{
           int statusCode = response.statusCode;
           if(statusCode != 200 || jsonBody == null){
             print(response.reasonPhrase);
-            throw new Exception("Error loaded api");
+            throw Exception('Error loaded api movie');
           } else {
-            print("Load api");
-            final JsonDecoder decoder = new JsonDecoder();
+            print('Load api movie');
+            final JsonDecoder decoder = JsonDecoder();
             final movieListContainer = decoder.convert(jsonBody);
             final List movieList = movieListContainer['results'];
-            return movieList.map((movieDetail) => new Movie.fromJson(movieDetail)).toList();
+            return movieList.map((movieDetail) => Movie.fromJson(movieDetail)).toList();
           }
     });
   }
@@ -56,13 +56,13 @@ class ApiServices{
       final String jsonBody = response.body;
       int statusCode = response.statusCode;
       if(jsonBody == null || statusCode != 200){
-        print("Load actor error");
-        throw new Exception(response.reasonPhrase);
+        print('Error loaded api actor');
+        throw Exception(response.reasonPhrase);
       } else {
-        final JsonDecoder decoder = new JsonDecoder();
+        final JsonDecoder decoder = JsonDecoder();
         final actorListContainer = decoder.convert(jsonBody);
         final List actorList = actorListContainer['cast'];
-        return actorList.map((actorDetail) => new Actor.fromJson(actorDetail)).toList();
+        return actorList.map((actorDetail) => Actor.fromJson(actorDetail)).toList();
       }
     });
   }
@@ -72,10 +72,10 @@ class ApiServices{
         .get(ApiUrls().REQUEST_TOKEN)
         .then((http.Response response) {
       final String jsonBody = response.body;
-      final JsonDecoder decoder = new JsonDecoder();
+      final JsonDecoder decoder = JsonDecoder();
       final requestTokenContainer = decoder.convert(jsonBody);
       final String requestToken = requestTokenContainer['request_token'];
-      print("get token: " + requestToken);
+      print('get token: ' + requestToken);
       return requestToken;
     });
   }
@@ -85,8 +85,8 @@ class ApiServices{
         ApiUrls().VALIDATE_WITH_LOGIN,
         body: requestBody
     );
-    print("validate login: " + response.body);
-    return RequestToken.fromJson({"response": response.body});
+    print('validate login: ' + response.body);
+    return RequestToken.fromJson({'response': response.body});
   }
 
   Future<Map<String, dynamic>> createSession(Map<String, dynamic> requestBody) async{
@@ -94,7 +94,7 @@ class ApiServices{
         ApiUrls().SESSION,
         body: requestBody
     );
-    print("create session: " + response.body);
+    print('create session: ' + response.body);
     return jsonDecode(response.body);
   }
 }

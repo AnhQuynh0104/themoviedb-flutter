@@ -77,12 +77,12 @@ class MovieItem extends StatelessWidget {
             MaterialPageRoute(
                 builder: (context) => DetailScreen(
                     id: movie?.id ?? 0,
-                    backdrop_path: image_link + "original" + movie!.backdrop_path.toString(),
-                    poster_path: image_link + "w200" + movie!.poster_path.toString(),
+                    backdrop_path: image_link + 'original' + movie!.backdrop_path.toString(),
+                    poster_path: image_link + 'w200' + movie!.poster_path.toString(),
                     first_air_date: movie!.release_date.toString() ,
                     name: movie!.title.toString(),
                     overview: movie!.overview.toString(),
-                    type: "movie",
+                    type: 'movie',
                 ),
             )
           );
@@ -93,7 +93,7 @@ class MovieItem extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Image.network(image_link + "w200" + movie!.poster_path.toString()),
+              Image.network(image_link + 'w200' + movie!.poster_path.toString()),
               Padding(
                 padding: const EdgeInsets.only(top: kDefaultPadding),
                 child: Text(

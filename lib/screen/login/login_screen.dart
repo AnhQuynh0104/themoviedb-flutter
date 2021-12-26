@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:themoviedb_app/constants.dart';
 import 'package:themoviedb_app/screen/build-appbar.dart';
 import 'package:themoviedb_app/screen/login/details/body.dart';
 
@@ -8,7 +10,6 @@ class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppbar(),
       body: Body(),
     );
   }

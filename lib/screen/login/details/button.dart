@@ -16,7 +16,7 @@ class Button extends StatelessWidget {
             backgroundColor: MaterialStateProperty.all(Color(0xFF2BC0E8))
         ),
         child: Text(
-          "Đăng nhập",
+          'Login',
           textAlign: TextAlign.center,
           style: TextStyle(
               color: Colors.white,
