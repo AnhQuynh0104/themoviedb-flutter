@@ -29,6 +29,32 @@ class _BodyState extends State<Body> {
     super.initState();
   }
 
+  void onPressLoginButton() async{
+    // 1. lay token
+    final token = await ApiServices().getRequestToken();
+
+    // 2. dung token va thong tin user nhap de dang nhap
+    final requestToken = await ApiServices().validateWithLogin({
+      'request_token': token,
+      'username': usernameController.text,
+      'password': passwordController.text
+    });
+
+    // 3. luu lai token va chuyen den man home
+    final session = await ApiServices().createSession({
+      'request_token': token
+    });
+
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setString('sessionId', session['session_id']);
+
+    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (BuildContext context) => HomeScreen())
+    );
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -103,32 +129,7 @@ class _BodyState extends State<Body> {
           Padding(
             padding: const EdgeInsets.only(left: kDefaultPadding),
             child: TextButton(
-              onPressed: () async {
-
-                // 1. lay token
-                final token = await ApiServices().getRequestToken();
-
-                // 2. dung token va thong tin user nhap de dang nhap
-                final requestToken = await ApiServices().validateWithLogin({
-                  'request_token': token,
-                  'username': usernameController.text,
-                  'password': passwordController.text
-                });
-
-                // 3. luu lai token va chuyen den man home
-                final session = await ApiServices().createSession({
-                  'request_token': token
-                });
-
-                final prefs = await SharedPreferences.getInstance();
-                prefs.setString('sessionId', session['session_id']);
-
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (BuildContext context) => HomeScreen())
-                );
-
-              },
+              onPressed: onPressLoginButton,
               style: ButtonStyle(
                   backgroundColor:
                       MaterialStateProperty.all(Color(0xFF2BC0E8))
