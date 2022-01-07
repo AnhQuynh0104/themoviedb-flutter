@@ -15,6 +15,7 @@ class CheckAuth extends StatefulWidget {
 
 class _CheckAuthState extends State<CheckAuth> {
 
+  @override
   Widget build(BuildContext context){
     return MultiBlocProvider(
         providers: [
@@ -28,8 +29,8 @@ class _CheckAuthState extends State<CheckAuth> {
         child: MaterialApp(
           initialRoute: '/',
           routes: {
-            '/': (context) => Login(),
-            '/home': (context) => HomeScreen()
+            '/': (context) => const Login(),
+            '/home': (context) => const HomeScreen()
           },
         )
     );

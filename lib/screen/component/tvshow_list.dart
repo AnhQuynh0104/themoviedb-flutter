@@ -20,17 +20,15 @@ class _TvshowListState extends State<TvshowList> {
       scrollDirection: Axis.horizontal,
       child: Row(
         children:<Widget>[
-          Container(
+          SizedBox(
             height: MediaQuery.of(context).size.height / 2,
             width: MediaQuery.of(context).size.width,
             child: FutureBuilder <List<Tvshow>>(
               future: ApiServices().fetchTvshows(),
               builder: (context, snapshot){
                 if((snapshot.hasError) || (!snapshot.hasData)){
-                  return Container(
-                    child: Center(
-                      child: CircularProgressIndicator(),
-                    ),
+                  return const Center(
+                    child: CircularProgressIndicator(),
                   );
                 }
                 List<Tvshow>? tvshowList = snapshot.data;
@@ -49,7 +47,7 @@ class _TvshowListState extends State<TvshowList> {
           )
         ],
       ),
-    );;
+    );
   }
 }
 
@@ -57,9 +55,9 @@ class TvshowItem extends StatelessWidget {
 
   Tvshow? tvshow;
 
-  TvshowItem({
+  TvshowItem({Key? key,
     this.tvshow
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +83,7 @@ class TvshowItem extends StatelessWidget {
               )
           );
         },
-        child: Container(
+        child: SizedBox(
           width: MediaQuery.of(context).size.width / 2,
           height: MediaQuery.of(context).size.height / 3,
           child: Column(
@@ -96,7 +94,7 @@ class TvshowItem extends StatelessWidget {
                 padding: const EdgeInsets.only(top: kDefaultPadding),
                 child: Text(
                   tvshow!.name.toString(),
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold
                   ),
@@ -104,7 +102,7 @@ class TvshowItem extends StatelessWidget {
               ),
               Text(
                 tvshow!.first_air_date.toString(),
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 12,
                 ),
               ),

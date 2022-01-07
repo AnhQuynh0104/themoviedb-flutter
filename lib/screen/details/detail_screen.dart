@@ -31,7 +31,7 @@ class DetailScreen extends StatelessWidget {
             children: <Widget>[
               ImageMovie(size: size, backdrop_path: backdrop_path, poster_path: poster_path,),
               TitleMovie(name: name),
-              Category(),
+              const Category(),
               Description(overview: overview,),
               ActorList(id: id, type: type,),
             ],

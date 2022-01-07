@@ -15,17 +15,21 @@ class AuthBloc extends Bloc<AuthEvent, AuthState>{
     );
     on<LoginButtonPressed>(
         (event, emit) async {
-          var session = await authRepo.login(event.username, event.password);
-          emit(
-            LoginLoading()
-          );
-          if(session['success'] == true){
-            final prefs = await SharedPreferences.getInstance();
-            prefs.setString('sessionId', session['session_id']);
-            emit(LoginSuccess());
-          } else {
-            emit(LoginFailed(message: 'Login error'));
-          }
+            emit(
+                LoginLoading()
+            );
+            try{
+                var session = await authRepo.login(event.username, event.password);
+                if(session['success'] == true){
+                  final prefs = await SharedPreferences.getInstance();
+                  prefs.setString('sessionId', session['session_id']);
+                  emit(LoginSuccess());
+                } else {
+                  emit(LoginFailed(message: 'User not found'));
+                }
+            } catch(e){
+              emit(LoginFailed(message: 'Server disconnect'));
+            }
         }
     );
   }

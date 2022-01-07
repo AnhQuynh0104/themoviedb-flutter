@@ -23,7 +23,7 @@ AppBar buildAppbar() {
       ),
     centerTitle: true,
     actions: <Widget>[
-      LogoutButton()
+      const LogoutButton()
     ],
   );
 }

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:themoviedb_app/blocs/auth/auth_bloc.dart';
 import 'package:themoviedb_app/blocs/auth/auth_event.dart';
 import 'package:themoviedb_app/blocs/auth/auth_state.dart';
 import 'package:themoviedb_app/constants.dart';
-import 'package:themoviedb_app/screen/login/details/login_error_screen.dart';
 import 'package:themoviedb_app/screen/login/details/title_and_intro.dart';
 
 class Body extends StatefulWidget {
@@ -55,7 +53,12 @@ class _BodyState extends State<Body> {
     final errorMessage = BlocBuilder<AuthBloc, AuthState>(
         builder: (context, state){
           if(state is LoginFailed){
-            return const LoginErrorScreen();
+            return Text(
+                state.message,
+              style: const TextStyle(
+                color: Colors.red
+              ),
+            );
           } else if(state is LoginLoading){
             return const Center(
               child: CircularProgressIndicator(),
@@ -88,11 +91,11 @@ class _BodyState extends State<Body> {
                               controller: usernameController,
                               decoration: InputDecoration(
                                 errorText: isUsernameBlank ? 'Username Can\'t Be Empty' : null,
-                                focusedBorder: OutlineInputBorder(
+                                focusedBorder: const OutlineInputBorder(
                                   borderSide:
                                   BorderSide(color: Color(0xFF2BC0E8)),
                                 ),
-                                enabledBorder: OutlineInputBorder(
+                                enabledBorder: const OutlineInputBorder(
                                   borderSide: BorderSide(color: Colors.grey),
                                 ),
                               )
@@ -116,12 +119,12 @@ class _BodyState extends State<Body> {
                                   obscureText: true,
                                   decoration: InputDecoration(
                                     errorText: isPasswordBlank ? 'Password Can\'t Be Empty' : null,
-                                    focusedBorder: OutlineInputBorder(
+                                    focusedBorder: const OutlineInputBorder(
                                       borderSide: BorderSide(
                                           color: Color(0xFF2BC0E8)
                                       ),
                                     ),
-                                    enabledBorder: OutlineInputBorder(
+                                    enabledBorder: const OutlineInputBorder(
                                       borderSide: BorderSide(color: Colors.grey),
                                     ),
                                   )

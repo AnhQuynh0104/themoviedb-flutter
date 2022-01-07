@@ -22,26 +22,25 @@ class _MovieListState extends State<MovieList> {
         scrollDirection: Axis.horizontal,
         child: Row(
           children:<Widget>[
-            Container(
+            SizedBox(
               width: size.width,
               height: size.height / 2,
               child: FutureBuilder <List<Movie>>(
                 future: ApiServices().fetchMovie(),
                 builder: (context, snapshot){
                   if((!snapshot.hasData)|| (snapshot.hasError)){
-                    return Container(
-                      child: Center(
-                        child: CircularProgressIndicator(),
-                      ),
+                    return const Center(
+                      child: CircularProgressIndicator(),
                     );
                   }
                   List<Movie>? movieList = snapshot.data;
                   return ListView.builder(
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
+                      itemCount: movieList!.length,
                       itemBuilder: (BuildContext context, int index){
                         return MovieItem(
-                          movie: movieList![index]
+                          movie: movieList[index]
                         );
                       }
                   );
@@ -56,14 +55,19 @@ class _MovieListState extends State<MovieList> {
 
 
 
-class MovieItem extends StatelessWidget {
+class MovieItem extends StatefulWidget {
 
   Movie? movie;
 
-  MovieItem({
+  MovieItem({Key? key,
     this.movie,
-  });
+  }) : super(key: key);
 
+  @override
+  State<MovieItem> createState() => _MovieItemState();
+}
+
+class _MovieItemState extends State<MovieItem> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -76,37 +80,37 @@ class MovieItem extends StatelessWidget {
             context,
             MaterialPageRoute(
                 builder: (context) => DetailScreen(
-                    id: movie?.id ?? 0,
-                    backdrop_path: image_link + 'original' + movie!.backdrop_path.toString(),
-                    poster_path: image_link + 'w200' + movie!.poster_path.toString(),
-                    first_air_date: movie!.release_date.toString() ,
-                    name: movie!.title.toString(),
-                    overview: movie!.overview.toString(),
+                    id: widget.movie?.id ?? 0,
+                    backdrop_path: image_link + 'original' + widget.movie!.backdrop_path.toString(),
+                    poster_path: image_link + 'w200' + widget.movie!.poster_path.toString(),
+                    first_air_date: widget.movie!.release_date.toString() ,
+                    name: widget.movie!.title.toString(),
+                    overview: widget.movie!.overview.toString(),
                     type: 'movie',
                 ),
             )
           );
         },
-        child: Container(
+        child: SizedBox(
           width: MediaQuery.of(context).size.width / 2,
           height: MediaQuery.of(context).size.height / 3,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Image.network(image_link + 'w200' + movie!.poster_path.toString()),
+              Image.network(image_link + 'w200' + widget.movie!.poster_path.toString()),
               Padding(
                 padding: const EdgeInsets.only(top: kDefaultPadding),
                 child: Text(
-                  movie!.title.toString(),
-                  style: TextStyle(
+                  widget.movie!.title.toString(),
+                  style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.bold
                   ),
                 ),
               ),
               Text(
-               movie!.release_date.toString(),
-                style: TextStyle(
+               widget.movie!.release_date.toString(),
+                style: const TextStyle(
                   fontSize: 12,
                 ),
               ),

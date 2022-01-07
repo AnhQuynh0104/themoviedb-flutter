@@ -18,13 +18,13 @@ class TitleMovie extends StatelessWidget {
             children: <TextSpan>[
               TextSpan(
                   text: name,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
                       fontSize: 24
                   )
               ),
-              TextSpan(
+              const TextSpan(
                   text: '  (2021)',
                   style: TextStyle(
                       color: kPrimaryColor

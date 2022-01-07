@@ -21,11 +21,11 @@ class _ActorListState extends State<ActorList> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.all(kDefaultPadding),
+      padding: const EdgeInsets.all(kDefaultPadding),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
+          const Text(
             'Series Cast',
             style: TextStyle(
                 letterSpacing: 1,
@@ -37,17 +37,15 @@ class _ActorListState extends State<ActorList> {
             scrollDirection: Axis.horizontal,
             child: Row(
               children: <Widget>[
-                Container(
+                SizedBox(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height / 2,
                   child: FutureBuilder <List<Actor>>(
                     future: ApiServices().fetchActor(widget.type.toString(), widget.id.toString()),
                     builder: (context, snapshot){
                       if((!snapshot.hasData) || (snapshot.hasError)){
-                        return Container(
-                          child: Center(
-                            child: CircularProgressIndicator(),
-                          ),
+                        return const Center(
+                          child: CircularProgressIndicator(),
                         );
                       }
                       List<Actor>? actorList = snapshot.data;
@@ -76,7 +74,7 @@ class _ActorListState extends State<ActorList> {
 class ActorInfo extends StatelessWidget {
   Actor? actor;
   
-  ActorInfo({this.actor});
+  ActorInfo({Key? key, this.actor}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +86,7 @@ class ActorInfo extends StatelessWidget {
           Container(
             width: size.width * 0.35,
             height: size.height * 0.7,
-            margin: EdgeInsets.only(
+            margin: const EdgeInsets.only(
                 top: kDefaultPadding,
                 right: kDefaultPadding
             ),
@@ -96,7 +94,7 @@ class ActorInfo extends StatelessWidget {
                 border: Border.all(
                     color: Colors.grey
                 ),
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   bottomLeft: Radius.circular(15),
                   bottomRight: Radius.circular(15)
                 ),
@@ -107,13 +105,13 @@ class ActorInfo extends StatelessWidget {
                   image_link + 'w200' + actor!.profile_path.toString(),
                 ),
                 Padding(
-                  padding: EdgeInsets.all(kDefaultPadding / 3),
+                  padding: const EdgeInsets.all(kDefaultPadding / 3),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
                         actor!.name.toString(),
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 20
                         ),
@@ -124,7 +122,7 @@ class ActorInfo extends StatelessWidget {
                             actor!.character.toString()
                         ),
                       ),
-                      Text(
+                      const Text(
                         '6 Episodes',
                         style: TextStyle(
                             color: Colors.grey

@@ -12,12 +12,12 @@ class Description extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(kDefaultPadding),
+      padding: const EdgeInsets.all(kDefaultPadding),
       color: kBackgroundDetail,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(
+          const Text(
             'This holiday season, the best gifts come with a bow.',
             style: TextStyle(
                 fontStyle: FontStyle.italic,
@@ -25,8 +25,8 @@ class Description extends StatelessWidget {
                 fontSize: 18
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: kDefaultPadding),
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: kDefaultPadding),
             child: Text(
               'Overview',
               style: TextStyle(
@@ -38,12 +38,12 @@ class Description extends StatelessWidget {
           ),
           Text(
             overview,
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 18
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: kDefaultPadding),
+          const Padding(
+            padding: EdgeInsets.only(top: kDefaultPadding),
             child: Text(
               'Jonathan Igla',
               style: TextStyle(
@@ -52,7 +52,7 @@ class Description extends StatelessWidget {
               ),
             ),
           ),
-          Text(
+          const Text(
               'Creator'
           )
         ],

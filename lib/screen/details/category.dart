@@ -9,8 +9,8 @@ class Category extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(kDefaultPadding),
-      decoration: BoxDecoration(
+      padding: const EdgeInsets.all(kDefaultPadding),
+      decoration: const BoxDecoration(
           color: kBoxColor
       ),
       child: Column(
@@ -19,26 +19,26 @@ class Category extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                padding: EdgeInsets.all(5),
+                padding: const EdgeInsets.all(5),
                 decoration: BoxDecoration(
                     border: Border.all(color: Colors.grey)
                 ),
                 child: Row(
-                  children: <Widget>[
+                  children: const <Widget>[
                     Text('TV-14'),
                   ],
                 ),
               ),
-              Text(
+              const Text(
                 "  .  ",
               ),
-              Text(
+              const Text(
                   '50 min'
               )
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.only(top: kDefaultPadding / 2),
+          const Padding(
+            padding: EdgeInsets.only(top: kDefaultPadding / 2),
             child: Text(
                 'Action & Adventure, Phim Chính Kịch'
             ),
