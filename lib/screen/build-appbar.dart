@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:themoviedb_app/constants.dart';
-import 'package:themoviedb_app/screen/login/login_screen.dart';
-
 
 AppBar buildAppbar() {
   return AppBar(
@@ -54,12 +52,7 @@ class LogoutButton extends StatelessWidget {
                       onPressed: () async {
                         SharedPreferences prefs = await SharedPreferences.getInstance();
                         await prefs.clear();
-                        Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (BuildContext context) => Login()
-                            )
-                        );
+                        Navigator.pushNamed(context, '/');
                       },
                       child: Text('ACCEPT')
                   )

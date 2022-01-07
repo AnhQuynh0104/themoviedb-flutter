@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:themoviedb_app/constants.dart';
 
-class LoginError extends StatelessWidget {
-  const LoginError({
+class LoginErrorScreen extends StatelessWidget {
+  const LoginErrorScreen({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        margin: EdgeInsets.only(bottom: kDefaultPadding),
+      padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding),
+        margin: const EdgeInsets.only(bottom: kDefaultPadding),
         decoration: BoxDecoration(
           boxShadow: [
             BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              blurRadius: 7,
-              offset: Offset(0, 0),
+                color: Colors.grey.withOpacity(0.2),
+                spreadRadius: 10,
+                blurRadius: 10,
+                offset: const Offset(0, 0)
             ),
           ],
         ),
@@ -23,21 +25,21 @@ class LoginError extends StatelessWidget {
             children: <Widget>[
               Container(
                   width: MediaQuery.of(context).size.width,
-                  padding: EdgeInsets.all(kDefaultPadding),
-                  decoration: BoxDecoration(
+                  padding: const EdgeInsets.all(kDefaultPadding),
+                  decoration: const BoxDecoration(
                     color: Color(0xFFD40242),
                   ),
                   child: Row(
                     children: <Widget>[
                       Container(
-                        margin: EdgeInsets.only(right: 10),
+                        margin: const EdgeInsets.only(right: 10),
                         width: 20,
                         height: 20,
                         decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(20)
                         ),
-                        child: Text(
+                        child: const Text(
                           '!',
                           textAlign: TextAlign.center,
                           style: TextStyle(
@@ -46,7 +48,7 @@ class LoginError extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Text(
+                      const Text(
                         'There was a problem',
                         style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -58,16 +60,16 @@ class LoginError extends StatelessWidget {
                   )
               ),
               Container(
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                     top: kDefaultPadding,
                     bottom: kDefaultPadding,
                     left: kDefaultPadding * 2 + 10
                 ),
                 width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.white,
                 ),
-                child: Text(
+                child: const Text(
                   'We could not find your username.',
                 ),
               )

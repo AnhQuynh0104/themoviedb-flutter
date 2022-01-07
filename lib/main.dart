@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:splashscreen/splashscreen.dart';
 import 'package:themoviedb_app/constants.dart';
 import 'package:themoviedb_app/screen/details/check_auth.dart';
+import 'package:themoviedb_app/screen/login/login_screen.dart';
 import 'constants.dart';
 
 void main() => runApp(MyApp());

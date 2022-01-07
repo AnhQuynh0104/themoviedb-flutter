@@ -8,22 +8,25 @@ class TitleAndIntro extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(
-          'Login to your account',
-          style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 24
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: kDefaultPadding * 1.5, horizontal: kDefaultPadding),
+      child: Column(
+        children: const [
+          Text(
+            'Login to your account',
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 24
+            ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: kDefaultPadding),
-          child: Text(
-            'In order to use the editing and rating capabilities of TMDB, as well as get personal recommendations you will need to login to your account. If you do not have an account, registering for an account is free and simple. ',
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: kDefaultPadding),
+            child: Text(
+              'In order to use the editing and rating capabilities of TMDB, as well as get personal recommendations you will need to login to your account. If you do not have an account, registering for an account is free and simple. ',
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
