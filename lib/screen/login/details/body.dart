@@ -18,6 +18,8 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
+  bool isUsernameBlank = false;
+  bool isPasswordBlank = false;
 
   AuthBloc? authBloc;
 
@@ -32,6 +34,19 @@ class _BodyState extends State<Body> {
   void initState() {
     authBloc = BlocProvider.of<AuthBloc>(context);
     super.initState();
+  }
+
+  void onPressLoginButton() async {
+    authBloc!.add(
+        LoginButtonPressed(
+            username: usernameController.text,
+            password: passwordController.text
+        )
+    );
+    setState(() {
+      usernameController.text.isEmpty ? isUsernameBlank = true : isUsernameBlank = false;
+      passwordController.text.isEmpty ? isPasswordBlank = true : isPasswordBlank = false;
+    });
   }
 
 
@@ -71,7 +86,8 @@ class _BodyState extends State<Body> {
                           ),
                           TextField(
                               controller: usernameController,
-                              decoration: const InputDecoration(
+                              decoration: InputDecoration(
+                                errorText: isUsernameBlank ? 'Username Can\'t Be Empty' : null,
                                 focusedBorder: OutlineInputBorder(
                                   borderSide:
                                   BorderSide(color: Color(0xFF2BC0E8)),
@@ -97,7 +113,9 @@ class _BodyState extends State<Body> {
                               ),
                               TextField(
                                   controller: passwordController,
-                                  decoration: const InputDecoration(
+                                  obscureText: true,
+                                  decoration: InputDecoration(
+                                    errorText: isPasswordBlank ? 'Password Can\'t Be Empty' : null,
                                     focusedBorder: OutlineInputBorder(
                                       borderSide: BorderSide(
                                           color: Color(0xFF2BC0E8)
@@ -119,10 +137,7 @@ class _BodyState extends State<Body> {
         Padding(
           padding: const EdgeInsets.only(left: kDefaultPadding),
           child: TextButton(
-            onPressed: () async {
-              authBloc!.add(LoginButtonPressed(username: usernameController.text, password: passwordController.text));
-              final prefs = await SharedPreferences.getInstance();
-            },
+            onPressed: onPressLoginButton,
             style: ButtonStyle(
                 backgroundColor:
                 MaterialStateProperty.all(const Color(0xFF2BC0E8))

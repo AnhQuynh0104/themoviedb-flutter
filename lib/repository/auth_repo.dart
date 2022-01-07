@@ -17,8 +17,6 @@ class AuthRepo{
     final session = await ApiServices().createSession({
       'request_token': token
     });
-
     return session;
-
   }
 }
