@@ -56,7 +56,8 @@ class _BodyState extends State<Body> {
             return Text(
                 state.message,
               style: const TextStyle(
-                color: Colors.red
+                color: Colors.red,
+                fontWeight: FontWeight.bold
               ),
             );
           } else if(state is LoginLoading){
@@ -85,6 +86,9 @@ class _BodyState extends State<Body> {
                                 bottom: kDefaultPadding / 4),
                             child: Text(
                               'Username',
+                              style: TextStyle(
+                                  color: Color(0xFF000000)
+                              ),
                             ),
                           ),
                           TextField(
@@ -93,10 +97,10 @@ class _BodyState extends State<Body> {
                                 errorText: isUsernameBlank ? 'Username Can\'t Be Empty' : null,
                                 focusedBorder: const OutlineInputBorder(
                                   borderSide:
-                                  BorderSide(color: Color(0xFF2BC0E8)),
+                                  BorderSide(color: kBoxColor),
                                 ),
                                 enabledBorder: const OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.grey),
+                                  borderSide: BorderSide(color: Color(0xFF000000)),
                                 ),
                               )
                           ),
@@ -112,6 +116,9 @@ class _BodyState extends State<Body> {
                                     bottom: kDefaultPadding / 4),
                                 child: Text(
                                   'Password',
+                                  style: TextStyle(
+                                      color: Color(0xFF000000)
+                                  ),
                                 ),
                               ),
                               TextField(
@@ -121,11 +128,11 @@ class _BodyState extends State<Body> {
                                     errorText: isPasswordBlank ? 'Password Can\'t Be Empty' : null,
                                     focusedBorder: const OutlineInputBorder(
                                       borderSide: BorderSide(
-                                          color: Color(0xFF2BC0E8)
+                                          color: kBoxColor
                                       ),
                                     ),
                                     enabledBorder: const OutlineInputBorder(
-                                      borderSide: BorderSide(color: Colors.grey),
+                                      borderSide: BorderSide(color: Color(0xFF000000)),
                                     ),
                                   )
                               ),
@@ -143,7 +150,7 @@ class _BodyState extends State<Body> {
             onPressed: onPressLoginButton,
             style: ButtonStyle(
                 backgroundColor:
-                MaterialStateProperty.all(const Color(0xFF2BC0E8))
+                MaterialStateProperty.all(kBoxColor)
             ),
             child: const Text(
               'Login',

@@ -20,14 +20,14 @@ class TitleMovie extends StatelessWidget {
                   text: name,
                   style: const TextStyle(
                       fontWeight: FontWeight.bold,
-                      color: Colors.black,
+                      color: Colors.white,
                       fontSize: 24
                   )
               ),
               const TextSpan(
                   text: '  (2021)',
                   style: TextStyle(
-                      color: kPrimaryColor
+                      color: Colors.white
                   )
               )
             ]

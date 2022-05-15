@@ -13,7 +13,7 @@ class Description extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(kDefaultPadding),
-      color: kBackgroundDetail,
+      color: kBoxColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -32,14 +32,16 @@ class Description extends StatelessWidget {
               style: TextStyle(
                   letterSpacing: 1,
                   fontWeight: FontWeight.bold,
-                  fontSize: 20
+                  fontSize: 20,
+                  color: Colors.white
               ),
             ),
           ),
           Text(
             overview,
             style: const TextStyle(
-                fontSize: 18
+                fontSize: 16,
+                color: Colors.white
             ),
           ),
           const Padding(
@@ -48,12 +50,16 @@ class Description extends StatelessWidget {
               'Jonathan Igla',
               style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 18
+                  fontSize: 18,
+                  color: Colors.white
               ),
             ),
           ),
           const Text(
-              'Creator'
+              'Creator',
+            style: TextStyle(
+                color: Colors.white
+            ),
           )
         ],
       ),

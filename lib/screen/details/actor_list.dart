@@ -20,53 +20,67 @@ class _ActorListState extends State<ActorList> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(kDefaultPadding),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          const Text(
-            'Series Cast',
-            style: TextStyle(
-                letterSpacing: 1,
-                fontWeight: FontWeight.bold,
-                fontSize: 20
+    return Container(
+      color: Colors.white,
+      child: Padding(
+        padding: const EdgeInsets.all(kDefaultPadding),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            const Text(
+              'Series Cast',
+              style: TextStyle(
+                  letterSpacing: 1,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20
+              ),
             ),
-          ),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: <Widget>[
-                SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height / 2,
-                  child: FutureBuilder <List<Actor>>(
-                    future: ApiServices().fetchActor(widget.type.toString(), widget.id.toString()),
-                    builder: (context, snapshot){
-                      if((!snapshot.hasData) || (snapshot.hasError)){
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                      List<Actor>? actorList = snapshot.data;
-                      return ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        shrinkWrap: true,
-                        itemCount: actorList!.length,
-                        itemBuilder: (BuildContext context, int index){
-                          return ActorInfo(
-                              actor: actorList[index]
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: <Widget>[
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height / 2.5,
+                    child: FutureBuilder <List<Actor>>(
+                      future: ApiServices().fetchActor(widget.type.toString(), widget.id.toString()),
+                      builder: (context, snapshot){
+                        if((!snapshot.hasData) || (snapshot.hasError)){
+                          return const Center(
+                            child: CircularProgressIndicator(),
                           );
-                        },
-                      );
-                    },
-                  ),
-                )
-              ],
-            ),
-          )
-        ],
-      ),
+                        }
+                        List<Actor>? actorList = snapshot.data;
+                        return ShaderMask(
+                            shaderCallback: (Rect rect) {
+                            return const LinearGradient(
+                              begin: Alignment.centerRight,
+                              end: Alignment.centerLeft,
+                              colors: [Colors.purple, Colors.transparent, Colors.transparent, Colors.purple],
+                              stops: [0.0, 0.1, 0.9, 1.0], // 10% purple, 80% transparent, 10% purple
+                            ).createShader(rect);
+                          },
+                          blendMode: BlendMode.dstOut,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            shrinkWrap: true,
+                            itemCount: actorList!.length,
+                            itemBuilder: (BuildContext context, int index){
+                              return ActorInfo(
+                                  actor: actorList[index]
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
+      )
     );
   }
 }
@@ -84,8 +98,8 @@ class ActorInfo extends StatelessWidget {
       child: Row(
         children: <Widget>[
           Container(
-            width: size.width * 0.35,
-            height: size.height * 0.7,
+            width: size.width * 0.4,
+            height: size.height * 0.4,
             margin: const EdgeInsets.only(
                 top: kDefaultPadding,
                 right: kDefaultPadding
@@ -101,8 +115,14 @@ class ActorInfo extends StatelessWidget {
             ),
             child: Column(
               children: [
-                Image.network(
-                  image_link + 'w200' + actor!.profile_path.toString(),
+                Container(
+                  height: size.height / 5,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                        fit: BoxFit.cover,
+                          image: NetworkImage(image_link + 'w500' + actor!.profile_path.toString()),
+                      ),
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(kDefaultPadding / 3),
@@ -113,19 +133,23 @@ class ActorInfo extends StatelessWidget {
                         actor!.name.toString(),
                         style: const TextStyle(
                             fontWeight: FontWeight.bold,
-                            fontSize: 20
+                            fontSize: 16
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: kDefaultPadding / 3),
                         child: Text(
-                            actor!.character.toString()
+                            actor!.character.toString(),
+                          style: const TextStyle(
+                            fontSize: 14
+                          ),
                         ),
                       ),
                       const Text(
                         '6 Episodes',
                         style: TextStyle(
-                            color: Colors.grey
+                            color: Colors.grey,
+                          fontSize: 12
                         ),
                       )
                     ],

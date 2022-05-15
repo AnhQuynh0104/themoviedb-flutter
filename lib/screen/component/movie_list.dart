@@ -24,25 +24,37 @@ class _MovieListState extends State<MovieList> {
           children:<Widget>[
             SizedBox(
               width: size.width,
-              height: size.height / 2,
+              height: size.height / 2.3,
               child: FutureBuilder <List<Movie>>(
                 future: ApiServices().fetchMovie(),
                 builder: (context, snapshot){
+                  print(snapshot.data);
                   if((!snapshot.hasData)|| (snapshot.hasError)){
                     return const Center(
                       child: CircularProgressIndicator(),
                     );
                   }
                   List<Movie>? movieList = snapshot.data;
-                  return ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      shrinkWrap: true,
-                      itemCount: movieList!.length,
-                      itemBuilder: (BuildContext context, int index){
-                        return MovieItem(
-                          movie: movieList[index]
-                        );
-                      }
+                  return ShaderMask(
+                      shaderCallback: (Rect rect) {
+                        return const LinearGradient(
+                          begin: Alignment.centerRight,
+                          end: Alignment.centerLeft,
+                          colors: [Colors.purple, Colors.transparent, Colors.transparent, Colors.purple],
+                          stops: [0.0, 0.1, 0.9, 1.0], // 10% purple, 80% transparent, 10% purple
+                        ).createShader(rect);
+                      },
+                      blendMode: BlendMode.dstOut,
+                      child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          shrinkWrap: true,
+                          itemCount: movieList!.length,
+                          itemBuilder: (BuildContext context, int index){
+                            return MovieItem(
+                                movie: movieList[index]
+                            );
+                          }
+                      )
                   );
                 },
               ),
@@ -97,9 +109,19 @@ class _MovieItemState extends State<MovieItem> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Image.network(image_link + 'w200' + widget.movie!.poster_path.toString()),
+              Container(
+                height: MediaQuery.of(context).size.height / 3,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: NetworkImage(image_link + 'w200' + widget.movie!.poster_path.toString()),
+                    fit: BoxFit.cover
+                  ),
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.white,
+                ),
+              ),
               Padding(
-                padding: const EdgeInsets.only(top: kDefaultPadding),
+                padding: const EdgeInsets.symmetric(vertical: kDefaultPadding / 2),
                 child: Text(
                   widget.movie!.title.toString(),
                   style: const TextStyle(

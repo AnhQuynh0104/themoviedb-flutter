@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:themoviedb_app/constants.dart';
 import 'package:themoviedb_app/screen/login/details/body.dart';
 
 class Login extends StatelessWidget {
@@ -8,6 +9,7 @@ class Login extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Body(),
+      backgroundColor: kBackgroundColor,
     );
   }
 }

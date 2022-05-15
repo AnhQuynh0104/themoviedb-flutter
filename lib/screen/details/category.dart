@@ -11,7 +11,7 @@ class Category extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(kDefaultPadding),
       decoration: const BoxDecoration(
-          color: kBoxColor
+          color: kPrimaryColor
       ),
       child: Column(
         children: <Widget>[
@@ -25,22 +25,36 @@ class Category extends StatelessWidget {
                 ),
                 child: Row(
                   children: const <Widget>[
-                    Text('TV-14'),
+                    Text(
+                        'TV-14',
+                      style: TextStyle(
+                        color: Colors.white
+                      ),
+                    ),
                   ],
                 ),
               ),
               const Text(
                 "  .  ",
+                style: TextStyle(
+                    color: Colors.white
+                ),
               ),
               const Text(
-                  '50 min'
+                  '50 min',
+                style: TextStyle(
+                    color: Colors.white
+                ),
               )
             ],
           ),
           const Padding(
             padding: EdgeInsets.only(top: kDefaultPadding / 2),
             child: Text(
-                'Action & Adventure, Phim Chính Kịch'
+                'Action & Adventure, Phim Chính Kịch',
+              style: TextStyle(
+                  color: Colors.white
+              ),
             ),
           )
         ],

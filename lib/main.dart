@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:themoviedb_app/constants.dart';
 import 'package:themoviedb_app/screen/details/check_auth.dart';
 import 'constants.dart';
@@ -16,7 +17,10 @@ class MyApp extends StatelessWidget {
       title: 'Welcome to The Movie App',
       theme: ThemeData(
           scaffoldBackgroundColor: kBackgroundColor,
-          visualDensity: VisualDensity.adaptivePlatformDensity
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          textTheme: GoogleFonts.latoTextTheme(
+            Theme.of(context).textTheme, // If this is not set, then ThemeData.light().textTheme is used.
+          ),
       ),
       home: const SplashScreen(),
     );
@@ -45,30 +49,55 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: kSplashScreenColor,
         body: Padding(
-          padding: const EdgeInsets.symmetric(vertical: kDefaultPadding * 3),
+          padding: const EdgeInsets.only(top: kDefaultPadding * 5),
           child: Column(
             children: <Widget>[
-              const Center(
-                child: Text('WELCOME TO TMDB',
-                  style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20.0
+              Center(
+                child: Text(
+                  'Movie App',
+                  style: GoogleFonts.dancingScript(
+                    textStyle: Theme.of(context).textTheme.headline4,
+                    fontSize: 40,
+                    fontWeight: FontWeight.w700,
+                    fontStyle: FontStyle.italic,
+                    color: kTitleColor
                   ),
+                ),
+              ),
+              const SizedBox(height: kDefaultPadding,),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height / 2.5,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/images/splash_screen.jpg')
+                  )
                 ),
               ),
               const SizedBox(height: kDefaultPadding * 2,),
               const CircularProgressIndicator(),
               const SizedBox(height: kDefaultPadding * 2,),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: MediaQuery.of(context).size.height / 3,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('assets/images/theme.jpg')
-                  )
+              Center(
+                child: Text(
+                  'from',
+                  style: GoogleFonts.lato(
+                    textStyle: Theme.of(context).textTheme.bodyText1,
+                    fontSize: 14,
+                  ),
                 ),
-              )
+              ),
+              Center(
+                child: Text(
+                  'Nguyễn Quỳnh Anh',
+                  style: GoogleFonts.lato(
+                    textStyle: Theme.of(context).textTheme.headline4,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
             ],
           ),
         )
