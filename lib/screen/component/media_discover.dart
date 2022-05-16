@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:themoviedb_app/constants.dart';
+import 'package:themoviedb_app/screen/search/body.dart';
 
-class MediaDiscover extends StatelessWidget {
+class MediaDiscover extends StatefulWidget {
   const MediaDiscover({
     Key? key,
     required this.size,
@@ -9,6 +10,11 @@ class MediaDiscover extends StatelessWidget {
 
   final Size size;
 
+  @override
+  State<MediaDiscover> createState() => _MediaDiscoverState();
+}
+
+class _MediaDiscoverState extends State<MediaDiscover> {
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -91,10 +97,15 @@ class MediaDiscover extends StatelessWidget {
                           ],
                         ),
                       ),
-                      child: const MaterialButton(
-                        onPressed: null,
+                      child: MaterialButton(
+                        onPressed: (){
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => Search())
+                          );
+                        },
                         minWidth: 100.0,
-                        child: Text(
+                        child: const Text(
                           'Search',
                           style: TextStyle(
                             fontSize: 16.0,

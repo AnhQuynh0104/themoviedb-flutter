@@ -49,6 +49,26 @@ class ApiServices{
     });
   }
 
+  Future <List<Movie>> fetchSearchMovie(String query){
+    return http
+        .get(ApiUrls().API_SEARCH_MOVIES(query))
+        .then((http.Response response){
+      final String jsonBody = response.body;
+      int statusCode = response.statusCode;
+      if(statusCode != 200 || jsonBody == null){
+        print(response.reasonPhrase);
+        throw Exception('Error loaded api search');
+      } else {
+        print('Load api search');
+        final JsonDecoder decoder = JsonDecoder();
+        final movieListContainer = decoder.convert(jsonBody);
+        final List movieList = movieListContainer['results'];
+        return movieList.map((movieDetail) => Movie.fromJson(movieDetail)).toList();
+      }
+    });
+  }
+
+
   Future <List<Actor>> fetchActor(String type, String id){
     return http
         .get(ApiUrls().API_ACTOR(type, id))

@@ -19,7 +19,7 @@ AppBar buildAppbar(Widget leadingIcon, bool isLogin) {
       ),
     centerTitle: true,
     actions: <Widget>[
-      isLogin ? LogoutButton() : SizedBox.shrink()
+      isLogin ? const LogoutButton() : const SizedBox.shrink()
     ],
   );
 }

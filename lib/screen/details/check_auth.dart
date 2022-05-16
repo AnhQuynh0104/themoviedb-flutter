@@ -5,6 +5,8 @@ import 'package:themoviedb_app/blocs/auth/auth_state.dart';
 import 'package:themoviedb_app/repository/auth_repo.dart';
 import 'package:themoviedb_app/screen/homescreen.dart';
 import 'package:themoviedb_app/screen/login/login_screen.dart';
+import 'package:themoviedb_app/screen/menu/favorite.dart';
+import 'package:themoviedb_app/screen/search/body.dart';
 
 class CheckAuth extends StatefulWidget {
   const CheckAuth({Key? key}) : super(key: key);
@@ -30,7 +32,8 @@ class _CheckAuthState extends State<CheckAuth> {
           initialRoute: '/',
           routes: {
             '/': (context) => const Login(),
-            '/home': (context) => const HomeScreen()
+            '/home': (context) => const HomeScreen(),
+            'search': (context) => const Search()
           },
         )
     );

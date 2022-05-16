@@ -45,7 +45,7 @@ class _DetailScreenState extends State<DetailScreen> {
                 color: Colors.white,
             ),
             onPressed: (){
-              Navigator.pushNamed(context, '/home');
+              Navigator.pushNamed(context, '/');
             },
           ),
           false
