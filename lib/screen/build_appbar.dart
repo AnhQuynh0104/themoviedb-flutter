@@ -1,19 +1,15 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:themoviedb_app/constants.dart';
 
-AppBar buildAppbar() {
+AppBar buildAppbar(Widget leadingIcon, bool isLogin) {
   return AppBar(
     elevation: 0,
     backgroundColor: kPrimaryColor,
-    leading: IconButton(
-      onPressed: () {},
-      icon: SvgPicture.asset(
-        'assets/icons/menu.svg',
-        color: Colors.white,
-      ),
-    ),
+    leading: leadingIcon,
     leadingWidth: kDefaultPadding * 2,
     title: SvgPicture.asset(
         'assets/icons/logo.svg',
@@ -23,10 +19,11 @@ AppBar buildAppbar() {
       ),
     centerTitle: true,
     actions: <Widget>[
-      const LogoutButton()
+      isLogin ? LogoutButton() : SizedBox.shrink()
     ],
   );
 }
+
 
 class LogoutButton extends StatelessWidget {
   const LogoutButton({Key? key}) : super(key: key);
@@ -38,7 +35,7 @@ class LogoutButton extends StatelessWidget {
           showDialog(
               context: context,
               builder: (BuildContext context) => AlertDialog(
-                title: Text(
+                title: const Text(
                   'Do you want to logout?'
                 ),
                 actions: [
@@ -46,7 +43,7 @@ class LogoutButton extends StatelessWidget {
                       onPressed: (){
                         Navigator.of(context, rootNavigator: true).pop('dialog');
                       },
-                      child: Text('CANCEL')
+                      child: const Text('CANCEL')
                   ),
                   TextButton(
                       onPressed: () async {
@@ -54,7 +51,7 @@ class LogoutButton extends StatelessWidget {
                         await prefs.clear();
                         Navigator.pushNamed(context, '/');
                       },
-                      child: Text('ACCEPT')
+                      child: const Text('ACCEPT')
                   )
                 ],
               )

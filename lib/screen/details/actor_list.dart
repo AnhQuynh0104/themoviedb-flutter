@@ -21,7 +21,7 @@ class _ActorListState extends State<ActorList> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: kBackgroundDetail,
       child: Padding(
         padding: const EdgeInsets.all(kDefaultPadding),
         child: Column(

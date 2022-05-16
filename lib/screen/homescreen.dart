@@ -1,16 +1,55 @@
 import 'package:flutter/material.dart';
-import 'package:themoviedb_app/screen/build-appbar.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:themoviedb_app/constants.dart';
+import 'package:themoviedb_app/screen/build_appbar.dart';
 import 'component/body.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
 
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppbar(),
+      appBar: buildAppbar(const MenuButton(), true),
       body: const Body(),
+    );
+  }
+}
+
+class MenuButton extends StatefulWidget {
+  const MenuButton({Key? key}) : super(key: key);
+
+  @override
+  State<MenuButton> createState() => _MenuButtonState();
+}
+
+class _MenuButtonState extends State<MenuButton> {
+
+  @override
+  Widget build(BuildContext context) {
+    return PopupMenuButton(
+        icon: SvgPicture.asset(
+          'assets/icons/menu.svg',
+          fit: BoxFit.cover,
+          height: kDefaultPadding * 2,
+          color: Colors.white,
+        ),
+        padding: const EdgeInsets.all(10.0),
+        itemBuilder: (context) => const [
+          PopupMenuItem(
+            child: Text("My Favorite"),
+            value: 1,
+          ),
+          PopupMenuItem(
+            child: Text("Watched List"),
+            value: 2,
+          )
+        ]
     );
   }
 }

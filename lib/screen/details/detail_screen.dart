@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:themoviedb_app/constants.dart';
-import 'package:themoviedb_app/screen/bottom-nav.dart';
-import 'package:themoviedb_app/screen/build-appbar.dart';
+import 'package:themoviedb_app/screen/build_appbar.dart';
 import 'package:themoviedb_app/screen/details/actor_list.dart';
 import 'package:themoviedb_app/screen/details/category.dart';
 import 'package:themoviedb_app/screen/details/description.dart';
@@ -29,33 +28,81 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailScreenState extends State<DetailScreen> {
-  int _selectedIndex = 0;
+
+  final GlobalKey _toolTipKey1 = GlobalKey();
+  final GlobalKey _toolTipKey2 = GlobalKey();
+  bool isOnTap1 = true;
+  bool isOnTap2 = true;
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-        appBar: buildAppbar(),
-        bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-                icon: Icon(Icons.list),
-                label: 'List'
+        appBar: buildAppbar(
+          IconButton(
+            icon: Image.asset(
+                'assets/icons/back.png',
+                color: Colors.white,
             ),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.favorite),
-                label: 'Favorite'
-            ),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.bookmark),
-                label: 'Mark'
-            ),
-          ],
-          currentIndex: _selectedIndex,
-          onTap: _onItemTapped,
-          selectedItemColor: Colors.amber[800],
+            onPressed: (){
+              Navigator.pushNamed(context, '/home');
+            },
+          ),
+          false
         ),
         backgroundColor: kBoxColor,
+        bottomNavigationBar: Container(
+          height: size.height / 15,
+          color: kPrimaryColor,
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                    isOnTap1 = !isOnTap1;
+                    setState(() {
+
+                    });
+                    final dynamic _toolTip = _toolTipKey1.currentState;
+                    _toolTip.ensureTooltipVisible();
+                  },
+                  child: Tooltip(
+                      key: _toolTipKey1,
+                    padding: const EdgeInsets.all(10.0),
+                    margin: const EdgeInsets.only(bottom: 5.0),
+                    message: "Mark as watched",
+                    child: ImageIcon(
+                        const AssetImage("assets/icons/mark.png"),
+                        color: isOnTap1 ? Colors.white : Colors.yellow,
+                      )
+                  ),
+                ),
+              ),
+              Expanded(
+                child: GestureDetector(
+                  onTap: () {
+                    isOnTap2 = !isOnTap2;
+                    setState(() {
+
+                    });
+                    final dynamic _toolTip = _toolTipKey2.currentState;
+                    _toolTip.ensureTooltipVisible();
+                  },
+                  child: Tooltip(
+                      key: _toolTipKey2,
+                      padding: const EdgeInsets.all(10.0),
+                      margin: const EdgeInsets.only(bottom: 5.0),
+                      message: "Add to favorite",
+                      child: ImageIcon(
+                        const AssetImage("assets/icons/favorite.png"),
+                        color: isOnTap2 ? Colors.white : Colors.red,
+                      )
+                  ),
+                ),
+              ),
+            ],
+          )
+        ),
         body: SingleChildScrollView(
           child: Column(
             children: <Widget>[
@@ -69,72 +116,4 @@ class _DetailScreenState extends State<DetailScreen> {
         )
     );
   }
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
-
 }
-
-
-// class DetailScreen extends StatelessWidget {
-//   const DetailScreen({
-//     Key? key,
-//     required this.id,
-//     required this.backdrop_path ,
-//     required this.poster_path ,
-//     required this.first_air_date,
-//     required this.name,
-//     required this.overview,
-//     required this.type,
-//   }) : super(key: key);
-//
-//   final int id;
-//   final String backdrop_path, poster_path,first_air_date, name, overview, type;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     Size size = MediaQuery.of(context).size;
-//     int _selectedIndex = 0;
-//     void _onItemTapped(int index) {
-//       setState(() {
-//         _selectedIndex = index;
-//       });
-//     }
-//     return Scaffold(
-//         appBar: buildAppbar(),
-//         bottomNavigationBar: BottomNavigationBar(
-//           items: const <BottomNavigationBarItem>[
-//             BottomNavigationBarItem(
-//                 icon: Icon(Icons.list),
-//                 label: 'List'
-//             ),
-//             BottomNavigationBarItem(
-//                 icon: Icon(Icons.favorite),
-//                 label: 'Favorite'
-//             ),
-//             BottomNavigationBarItem(
-//                 icon: Icon(Icons.bookmark),
-//                 label: 'Mark'
-//             ),
-//           ],
-//           currentIndex: _selectedIndex,
-//           onTap: _onItemTapped,
-//         ),
-//         backgroundColor: kBoxColor,
-//         body: SingleChildScrollView(
-//           child: Column(
-//             children: <Widget>[
-//               ImageMovie(size: size, backdrop_path: backdrop_path, poster_path: poster_path,),
-//               TitleMovie(name: name),
-//               const Category(),
-//               Description(overview: overview,),
-//               ActorList(id: id, type: type,),
-//             ],
-//           ),
-//         )
-//     );
-//   }
-// }
