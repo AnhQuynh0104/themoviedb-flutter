@@ -3,10 +3,17 @@ import 'package:themoviedb_app/constants.dart';
 import 'package:themoviedb_app/data_sources/api_services.dart';
 import 'package:themoviedb_app/models/movie.dart';
 import 'package:themoviedb_app/screen/build_appbar.dart';
+import 'package:themoviedb_app/screen/details/detail_screen.dart';
 
-class Search extends StatelessWidget {
-  const Search({Key? key}) : super(key: key);
+class Search extends StatefulWidget {
+  const Search({Key? key, required this.query}) : super(key: key);
 
+  final String query;
+  @override
+  State<Search> createState() => _SearchState();
+}
+
+class _SearchState extends State<Search> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
@@ -18,112 +25,138 @@ class Search extends StatelessWidget {
               color: Colors.white,
             ),
             onPressed: (){
-              Navigator.pushNamed(context, '/');
+              Navigator.pushNamed(context, '/home');
             },
         ), false),
-      body: Column(
-        children: <Widget>[
-          Container(
-            height: size.height / 15,
-            width: size.width,
-            padding: const EdgeInsets.all(12.0),
-            color: kSplashScreenColor,
-            child: const Text(
-              'Search Results',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 18.0,
-                fontWeight: FontWeight.bold
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
+          children: <Widget>[
+            Container(
+              height: size.height / 15,
+              width: size.width,
+              padding: const EdgeInsets.all(12.0),
+              color: kSplashScreenColor,
+              child: const Text(
+                'Search Results',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18.0,
+                  fontWeight: FontWeight.bold
+                ),
               ),
             ),
-          ),
-          SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Column(
-              children: <Widget>[
-                SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                  child: FutureBuilder <List<Movie>>(
-                    future: ApiServices().fetchSearchMovie('a'),
-                    builder: (context, snapshot){
-                      if((!snapshot.hasData) || (snapshot.hasError)){
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      }
-                      List<Movie>? searchList = snapshot.data;
-                      return ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        itemCount: searchList!.length,
-                        itemBuilder: (BuildContext context, int index){
-                          return SearchInfo(
-                              movie: searchList[index]
+            SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(
+                children: <Widget>[
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                    child: FutureBuilder <List<Movie>>(
+                      future: ApiServices().fetchSearchMovie(widget.query.toString()),
+                      builder: (context, snapshot){
+                        if((!snapshot.hasData) || (snapshot.hasError)){
+                          return const Center(
+                            child: CircularProgressIndicator(),
                           );
-                        },
-                      );
-                    },
-                  ),
-                )
-              ],
-            ),
-          )
-        ],
+                        }
+                        List<Movie>? searchList = snapshot.data;
+                        return ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: searchList!.length,
+                          itemBuilder: (BuildContext context, int index){
+                            return SearchItem(
+                                movie: searchList[index]
+                            );
+                          },
+                        );
+                      },
+                    ),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
 }
 
-class SearchInfo extends StatelessWidget {
+class SearchItem extends StatelessWidget {
   final Movie? movie;
 
-  const SearchInfo({Key? key, this.movie}) : super(key: key);
+  const SearchItem({Key? key, this.movie}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Container(
-      margin: const EdgeInsets.all(10.0),
-      height: size.height / 5,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10.0),
-        color: kBackgroundColor
-      ),
-      child: Row(
-        children: <Widget>[
-          Container(
-            margin: const EdgeInsets.only(right: 15.0),
-           width: size.width / 3,
+    return GestureDetector(
+        onTap: (){
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => DetailScreen(
+                  id: movie?.id ?? 0,
+                  backdrop_path: image_link + 'original' + movie!.backdrop_path.toString(),
+                  poster_path: image_link + 'w200' + movie!.poster_path.toString(),
+                  first_air_date: movie!.release_date.toString() ,
+                  name: movie!.title.toString(),
+                  overview: movie!.overview.toString(),
+                  type: 'movie',
+                ),
+              )
+          );
+        },
+        child: Container(
+            margin: const EdgeInsets.all(10.0),
+            height: size.height / 5,
             decoration: BoxDecoration(
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: NetworkImage(image_link + 'w200' + movie!.poster_path.toString()),
-              ),
+                borderRadius: BorderRadius.circular(10.0),
+                color: kBackgroundColor
             ),
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                  movie!.title.toString(),
-                  style: const TextStyle(
-                    color: kTitleColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 20.0
-                  ),
-              ),
-              Text(
-                  movie!.release_date.toString(),
-                  style: const TextStyle(
-                      color: kTitleColor
-                  ),
-              ),
-            ],
-          )
-        ],
-      ),
+            child: Row(
+                children: <Widget>[
+                    Container(
+                      margin: const EdgeInsets.only(right: 15.0),
+                      width: size.width / 3,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                          fit: BoxFit.cover,
+                          image: NetworkImage(image_link + 'w200' + movie!.poster_path.toString()),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                            Flexible(
+                              child: Text(
+                                movie!.title.toString(),
+                                style: const TextStyle(
+                                  color: kTitleColor,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20.0
+                                ),
+                              ),
+                            ),
+                            const SizedBox(height: 10.0),
+                            Text(
+                                movie!.release_date.toString(),
+                                style: const TextStyle(
+                                  color: kTitleColor
+                                ),
+                            ),
+                        ],
+                      ),
+                    )
+                ],
+            ),
+        )
     );
   }
 }

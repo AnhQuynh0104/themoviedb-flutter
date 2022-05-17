@@ -15,6 +15,9 @@ class MediaDiscover extends StatefulWidget {
 }
 
 class _MediaDiscoverState extends State<MediaDiscover> {
+  TextEditingController searchInput = TextEditingController();
+  String textInput = '';
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -101,7 +104,7 @@ class _MediaDiscoverState extends State<MediaDiscover> {
                         onPressed: (){
                           Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => Search())
+                              MaterialPageRoute(builder: (context) => Search(query: searchInput.text))
                           );
                         },
                         minWidth: 100.0,
@@ -126,6 +129,12 @@ class _MediaDiscoverState extends State<MediaDiscover> {
                   ),
                   cursorColor: Colors.black,
                   cursorWidth: 1.0,
+                  controller: searchInput,
+                  // onChanged: (value){
+                  //   setState(() {
+                  //     textInput = value.toString();
+                  //   });
+                  // },
                 ),
               ),
             ],
