@@ -1,4 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:themoviedb_app/models/account.dart';
 import 'package:themoviedb_app/models/actor.dart';
 import 'package:themoviedb_app/models/movie.dart';
 import 'package:themoviedb_app/models/request_token.dart';
@@ -116,5 +118,17 @@ class ApiServices{
     );
     print('create session: ' + response.body);
     return jsonDecode(response.body);
+  }
+
+  Future<Account> getAccount(){
+    return http
+        .get(Uri.parse(ApiAccount().getAccount().toString()))
+        .then((http.Response response) {
+      final String jsonBody = response.body;
+      final JsonDecoder decoder = JsonDecoder();
+      final accountContainer = decoder.convert(jsonBody);
+      print('get account: ' + accountContainer);
+      return accountContainer;
+    });
   }
 }

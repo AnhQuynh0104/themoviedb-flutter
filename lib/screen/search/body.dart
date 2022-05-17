@@ -18,6 +18,7 @@ class _SearchState extends State<Search> {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Scaffold(
+      backgroundColor: kBackgroundColor,
       appBar: buildAppbar(
           IconButton(
             icon: Image.asset(
@@ -35,6 +36,7 @@ class _SearchState extends State<Search> {
             Container(
               height: size.height / 15,
               width: size.width,
+              margin: const EdgeInsets.only(bottom: 10.0),
               padding: const EdgeInsets.all(12.0),
               color: kSplashScreenColor,
               child: const Text(
@@ -115,7 +117,7 @@ class SearchItem extends StatelessWidget {
             height: size.height / 5,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10.0),
-                color: kBackgroundColor
+                color: kSplashScreenColor
             ),
             child: Row(
                 children: <Widget>[
@@ -123,6 +125,9 @@ class SearchItem extends StatelessWidget {
                       margin: const EdgeInsets.only(right: 15.0),
                       width: size.width / 3,
                       decoration: BoxDecoration(
+                          borderRadius: const BorderRadius.only(
+                              bottomLeft: Radius.circular(10.0), 
+                              topLeft: Radius.circular(10.0)),
                           image: DecorationImage(
                           fit: BoxFit.cover,
                           image: NetworkImage(image_link + 'w200' + movie!.poster_path.toString()),
@@ -138,7 +143,7 @@ class SearchItem extends StatelessWidget {
                               child: Text(
                                 movie!.title.toString(),
                                 style: const TextStyle(
-                                  color: kTitleColor,
+                                  color: kBackgroundColor,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20.0
                                 ),
@@ -148,7 +153,7 @@ class SearchItem extends StatelessWidget {
                             Text(
                                 movie!.release_date.toString(),
                                 style: const TextStyle(
-                                  color: kTitleColor
+                                  color: kBackgroundColor
                                 ),
                             ),
                         ],

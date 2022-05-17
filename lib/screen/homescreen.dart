@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:themoviedb_app/constants.dart';
+import 'package:themoviedb_app/screen/account/body.dart';
 import 'package:themoviedb_app/screen/build_appbar.dart';
 import 'package:themoviedb_app/screen/menu/favorite.dart';
 import 'component/body.dart';
@@ -41,14 +43,32 @@ class _MenuButtonState extends State<MenuButton> {
           color: Colors.white,
         ),
         padding: const EdgeInsets.all(10.0),
-        itemBuilder: (context) => [
+        onSelected: (value){
+          if(value == 1){
+            Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const MyAccount())
+            );
+          }
+          if(value == 2){
+            Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const Favorite())
+            );
+          }
+        },
+        itemBuilder: (context) => const[
           PopupMenuItem(
-            child: Text("My Favorite"),
+            child: Text("My Account"),
             value: 1,
           ),
           PopupMenuItem(
-            child: Text("Watched List"),
+            child: Text("My Favorite"),
             value: 2,
+          ),
+          PopupMenuItem(
+            child: Text("Watched List"),
+            value: 3,
           )
         ]
     );

@@ -51,26 +51,15 @@ class _ActorListState extends State<ActorList> {
                           );
                         }
                         List<Actor>? actorList = snapshot.data;
-                        return ShaderMask(
-                            shaderCallback: (Rect rect) {
-                            return const LinearGradient(
-                              begin: Alignment.centerRight,
-                              end: Alignment.centerLeft,
-                              colors: [Colors.purple, Colors.transparent, Colors.transparent, Colors.purple],
-                              stops: [0.0, 0.1, 0.9, 1.0], // 10% purple, 80% transparent, 10% purple
-                            ).createShader(rect);
+                        return ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          shrinkWrap: true,
+                          itemCount: actorList!.length,
+                          itemBuilder: (BuildContext context, int index){
+                            return ActorInfo(
+                                actor: actorList[index]
+                            );
                           },
-                          blendMode: BlendMode.dstOut,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            shrinkWrap: true,
-                            itemCount: actorList!.length,
-                            itemBuilder: (BuildContext context, int index){
-                              return ActorInfo(
-                                  actor: actorList[index]
-                              );
-                            },
-                          ),
                         );
                       },
                     ),

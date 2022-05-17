@@ -45,7 +45,7 @@ class _DetailScreenState extends State<DetailScreen> {
                 color: Colors.white,
             ),
             onPressed: (){
-              Navigator.pushNamed(context, '/');
+              Navigator.pushNamed(context, '/home');
             },
           ),
           false
@@ -70,7 +70,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       key: _toolTipKey1,
                     padding: const EdgeInsets.all(10.0),
                     margin: const EdgeInsets.only(bottom: 5.0),
-                    message: "Mark as watched",
+                    message: "Add to watch list",
                     child: ImageIcon(
                         const AssetImage("assets/icons/mark.png"),
                         color: isOnTap1 ? Colors.white : Colors.yellow,
@@ -92,7 +92,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       key: _toolTipKey2,
                       padding: const EdgeInsets.all(10.0),
                       margin: const EdgeInsets.only(bottom: 5.0),
-                      message: "Add to favorite",
+                      message: "Mark as favorite",
                       child: ImageIcon(
                         const AssetImage("assets/icons/favorite.png"),
                         color: isOnTap2 ? Colors.white : Colors.red,

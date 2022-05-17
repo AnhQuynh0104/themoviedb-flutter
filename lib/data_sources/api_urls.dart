@@ -1,3 +1,6 @@
+
+
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:themoviedb_app/constants.dart';
 
 class ApiUrls{
@@ -6,7 +9,6 @@ class ApiUrls{
   final Uri REQUEST_TOKEN = Uri.parse(endpoint + 'authentication/token/new' + apiKey);
   final Uri VALIDATE_WITH_LOGIN = Uri.parse(endpoint + 'authentication/token/validate_with_login' + apiKey);
   final Uri SESSION = Uri.parse(endpoint + 'authentication/session/new' + apiKey);
-  //final Uri SEARCH_MOVIES = Uri.parse(endpoint + 'search/movie' + apiKey + '&language=en-US&page=1&include_adult=false');
 
 
   Uri API_ACTOR(String type, String movieId){
@@ -14,7 +16,22 @@ class ApiUrls{
   }
 
   Uri API_SEARCH_MOVIES(String query){
-
     return Uri.parse('${endpoint}search/movie/$apiKey&language=en-US&query=$query&page=1&include_adult=false');
+  }
+
+  // Future<Uri> API_ACCOUNT() async{
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   String? session = prefs.getString('sessionId');
+  //   print('izschjhzs $Uri.parse(${endpoint}account$apiKey&session_id=$session)');
+  //   return Uri.parse('${endpoint}account$apiKey&session_id=$session');
+  // }
+}
+
+class ApiAccount{
+  Future<String?> getAccount() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? session = prefs.getString('sessionId');
+    print('session ${endpoint}account$apiKey&session_id=$session');
+    return '${endpoint}account$apiKey&session_id=$session';
   }
 }
