@@ -1,4 +1,4 @@
-class Account {
+class Session {
   Avatar? avatar;
   int? id;
   String? iso6391;
@@ -7,7 +7,7 @@ class Account {
   bool? includeAdult;
   String? username;
 
-  Account(
+  Session(
       {this.avatar,
         this.id,
         this.iso6391,
@@ -16,7 +16,7 @@ class Account {
         this.includeAdult,
         this.username});
 
-  Account.fromJson(Map<String, dynamic> json) {
+  Session.fromJson(Map<String, dynamic> json) {
     avatar =
     json['avatar'] != null ? new Avatar.fromJson(json['avatar']) : null;
     id = json['id'];

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:themoviedb_app/constants.dart';
 import 'package:themoviedb_app/data_sources/api_services.dart';
+import 'package:themoviedb_app/data_sources/api_urls.dart';
 import 'package:themoviedb_app/models/account.dart';
 import 'package:themoviedb_app/screen/build_appbar.dart';
 
@@ -37,7 +38,6 @@ class _MyAccountState extends State<MyAccount> {
         future: ApiServices().getAccount(),
         builder: (context, snapshot){
           if((!snapshot.hasData) || (snapshot.hasError)){
-            print('abc: $snapshot.data');
             return const Center(
               child: CircularProgressIndicator(),
             );
@@ -58,17 +58,15 @@ class _MyAccountState extends State<MyAccount> {
                   ),
                 ),
                 ClipRRect(
-                    borderRadius: BorderRadius.circular(8.0),
-                    child: const Image(
-                      width: 100,
-                      height: 100,
-                      image: NetworkImage('https://www.google.com/imgres?imgurl=https%3A%2F%2Fwallpaperaccess.com%2Ffull%2F2088413.jpg&imgrefurl=https%3A%2F%2F'
-                          'wallpaperaccess.com%2Ftwice-sana-laptop&tbnid=Z5ynUWTwR_nixM&vet=12ahUKEwihoo_p9-X3AhUUU_UHHShkD1MQMyhLegQIARBw..i&docid=ARb5h'
-                          'b84zZKLOM&w=1920&h=1080&q=sana&ved=2ahUKEwihoo_p9-X3AhUUU_UHHShkD1MQMyhLegQIARBw'),
+                    borderRadius: BorderRadius.circular(0.0),
+                    child: Image(
+                      width: 200,
+                      height: 200,
+                      image: NetworkImage(image_link + 'w200' + account!.avatar!.tmdb!.avatarPath.toString()),
                     )
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(vertical: kDefaultPadding),
+                  padding: const EdgeInsets.symmetric(vertical: kDefaultPadding),
                   child: Text(
                     account!.username.toString(),
                     style: GoogleFonts.nunito(
@@ -78,19 +76,23 @@ class _MyAccountState extends State<MyAccount> {
                     ),
                   ),
                 ),
-                Text(
-                  'Edit Profile',
-                  style: GoogleFonts.nunito(
-                      textStyle: Theme.of(context).textTheme.headline4,
-                      fontSize: 20,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold
+                Container(
+                  padding: const EdgeInsets.only(bottom: kDefaultPadding),
+                  child: Text(
+                    'Edit Profile',
+                    style: GoogleFonts.nunito(
+                        textStyle: Theme.of(context).textTheme.headline4,
+                        fontSize: 20,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold
+                    ),
                   ),
                 ),
-                Row(
+                Column(
                   children: <Widget>[
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
                             'Gender'
@@ -124,33 +126,33 @@ class _MyAccountState extends State<MyAccount> {
                         ),
                       ],
                     ),
-                    Container(
-                      margin: EdgeInsets.only(
-                        left: kDefaultPadding,
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                              'Name'
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                            'Name'
+                        ),
+                        Container(
+                          width: size.width / 1.35,
+                          margin: EdgeInsets.only(
+                              top: 10.0,
+                              left: 10.0
                           ),
-                          Container(
-                            width: size.width / 1.75,
-                            margin: EdgeInsets.only(top: 10.0),
-                            padding: EdgeInsets.all(10.0),
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Color(0xFFced4da))
-                            ),
-                            child: Text(
-                                account.name.toString()
-                            ),
-                          )
-                        ],
-                      ),
-                    )
+                          padding: EdgeInsets.all(10.0),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: Color(0xFFced4da))
+                          ),
+                          child: Text(
+                              account.name.toString()
+                          ),
+                        )
+                      ],
+                    ),
                   ],
                 ),
-                SizedBox(
+                Container(
+                  padding: EdgeInsets.only(top: kDefaultPadding),
                   width: size.width,
                   child: TextButton(
                     onPressed: (){},
@@ -165,8 +167,9 @@ class _MyAccountState extends State<MyAccount> {
                     ),
                   ),
                 ),
-                SizedBox(
+                Container(
                   width: size.width,
+                  padding: EdgeInsets.only(top: kDefaultPadding / 2),
                   child: TextButton(
                     onPressed: (){},
                     child: Text(

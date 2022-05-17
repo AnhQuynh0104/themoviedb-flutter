@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:themoviedb_app/models/account.dart';
 import 'package:themoviedb_app/models/actor.dart';
 import 'package:themoviedb_app/models/movie.dart';
 import 'package:themoviedb_app/models/request_token.dart';
+import 'package:themoviedb_app/models/session.dart';
 import 'package:themoviedb_app/models/tvshow.dart';
 import 'dart:convert';
 import 'dart:convert' as json;
@@ -120,15 +123,19 @@ class ApiServices{
     return jsonDecode(response.body);
   }
 
-  Future<Account> getAccount(){
+  Future<Account> getAccount() async{
+    String uri = await ApiAccount().getAccount() ?? "";
     return http
-        .get(Uri.parse(ApiAccount().getAccount().toString()))
+        .get(Uri.parse(uri))
         .then((http.Response response) {
       final String jsonBody = response.body;
+
       final JsonDecoder decoder = JsonDecoder();
       final accountContainer = decoder.convert(jsonBody);
-      print('get account: ' + accountContainer);
-      return accountContainer;
+      Account account = Account.fromJson(accountContainer);
+      // print('get account: ' + accountContainer);
+      //log("AS 137"+(session.name ?? "NULL"));
+      return account;
     });
   }
 }
