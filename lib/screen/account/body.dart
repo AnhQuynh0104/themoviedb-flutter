@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:themoviedb_app/constants.dart';
 import 'package:themoviedb_app/data_sources/api_services.dart';
 import 'package:themoviedb_app/data_sources/api_urls.dart';
@@ -15,6 +18,18 @@ class MyAccount extends StatefulWidget {
 }
 
 class _MyAccountState extends State<MyAccount> {
+  Future<Null> getSharedPrefs() async {
+    var accountId = await ApiServices().getAccountId();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setInt('accountId', accountId);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getSharedPrefs();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -33,7 +48,7 @@ class _MyAccountState extends State<MyAccount> {
           ),
           false
       ),
-      backgroundColor: kBackgroundColor,
+      backgroundColor: kSplashScreenColor,
       body: FutureBuilder<Account>(
         future: ApiServices().getAccount(),
         builder: (context, snapshot){
@@ -43,9 +58,10 @@ class _MyAccountState extends State<MyAccount> {
             );
           }
           Account? account = snapshot.data;
+
           return Container(
             width: size.width,
-            padding: const EdgeInsets.all(kDefaultPadding),
+            padding: const EdgeInsets.all(kDefaultPadding / 2),
             child: Column(
               children: <Widget>[
                 Text(
@@ -54,9 +70,10 @@ class _MyAccountState extends State<MyAccount> {
                       textStyle: Theme.of(context).textTheme.headline4,
                       fontSize: 40,
                       fontWeight: FontWeight.w700,
-                      color: kBoxColor
+                      color: kPrimaryColor
                   ),
                 ),
+                const SizedBox(height: kDefaultPadding / 2,),
                 ClipRRect(
                     borderRadius: BorderRadius.circular(0.0),
                     child: Image(
@@ -66,13 +83,13 @@ class _MyAccountState extends State<MyAccount> {
                     )
                 ),
                 Container(
-                  padding: const EdgeInsets.symmetric(vertical: kDefaultPadding),
+                  padding: const EdgeInsets.symmetric(vertical: kDefaultPadding / 2),
                   child: Text(
                     account!.username.toString(),
                     style: GoogleFonts.nunito(
                         textStyle: Theme.of(context).textTheme.headline4,
                         fontSize: 20,
-                        color: kBoxColor
+                        color: kBackgroundColor
                     ),
                   ),
                 ),
@@ -80,10 +97,11 @@ class _MyAccountState extends State<MyAccount> {
                   padding: const EdgeInsets.only(bottom: kDefaultPadding),
                   child: Text(
                     'Edit Profile',
+                    textAlign: TextAlign.left,
                     style: GoogleFonts.nunito(
                         textStyle: Theme.of(context).textTheme.headline4,
-                        fontSize: 20,
-                        color: Colors.black,
+                        fontSize: 24,
+                        color: kPrimaryColor,
                         fontWeight: FontWeight.bold
                     ),
                   ),
@@ -94,35 +112,45 @@ class _MyAccountState extends State<MyAccount> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Text(
-                            'Gender'
+                        const Text(
+                            'Gender',
+                          style: TextStyle(
+                            color: kBackgroundColor
+                          ),
                         ),
-                        DropdownButton(
-                          value: dropdownValue,
-                          icon: const ImageIcon(
-                              AssetImage('assets/icons/arrow_down.png')
+                        const SizedBox(width: kDefaultPadding / 2,),
+                        Expanded(
+                          child: DropdownButton(
+                            elevation: 16,
+                            isExpanded: true,
+                            value: dropdownValue,
+                            icon: const ImageIcon(
+                                AssetImage('assets/icons/arrow_down.png')
+                            ),
+                            iconSize: 16.0,
+                            dropdownColor: kPrimaryColor,
+                            iconEnabledColor: kBackgroundColor,
+                            style: const TextStyle(color: kBackgroundColor),
+                            underline: Container(
+                              height: 2,
+                              color: kPrimaryColor,
+                            ),
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                dropdownValue = newValue!;
+                              });
+                            },
+                            items: <String>['Female', 'Male', 'Other']
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Container(
+                                    padding: const EdgeInsets.all(10.0),
+                                    child: Text(value)
+                                ),
+                              );
+                            }).toList(),
                           ),
-                          iconSize: 16.0,
-                          style: const TextStyle(color: Colors.black),
-                          underline: Container(
-                            height: 2,
-                            color: Colors.black,
-                          ),
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              dropdownValue = newValue!;
-                            });
-                          },
-                          items: <String>['Female', 'Male', 'Other']
-                              .map<DropdownMenuItem<String>>((String value) {
-                            return DropdownMenuItem<String>(
-                              value: value,
-                              child: Container(
-                                  padding: EdgeInsets.all(10.0),
-                                  child: Text(value)
-                              ),
-                            );
-                          }).toList(),
                         ),
                       ],
                     ),
@@ -130,21 +158,33 @@ class _MyAccountState extends State<MyAccount> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        Text(
-                            'Name'
+                        const Text(
+                            'Name',
+                          style: TextStyle(
+                            color: kBackgroundColor
+                          ),
                         ),
-                        Container(
-                          width: size.width / 1.35,
-                          margin: EdgeInsets.only(
-                              top: 10.0,
-                              left: 10.0
-                          ),
-                          padding: EdgeInsets.all(10.0),
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Color(0xFFced4da))
-                          ),
-                          child: Text(
-                              account.name.toString()
+                        const SizedBox(width: kDefaultPadding / 2,),
+                        Expanded(
+                          child: Container(
+                            //width: size.width / 1.35,
+                            margin: const EdgeInsets.only(
+                                top: 10.0,
+                                left: 7.0
+                            ),
+                            padding: const EdgeInsets.all(10.0),
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: kPrimaryColor,
+                                    width: 2.0
+                                )
+                            ),
+                            child: Text(
+                                account.name.toString(),
+                              style: const TextStyle(
+                                color: kBackgroundColor
+                              ),
+                            ),
                           ),
                         )
                       ],
@@ -152,34 +192,34 @@ class _MyAccountState extends State<MyAccount> {
                   ],
                 ),
                 Container(
-                  padding: EdgeInsets.only(top: kDefaultPadding),
+                  padding: const EdgeInsets.only(top: kDefaultPadding * 2),
                   width: size.width,
                   child: TextButton(
                     onPressed: (){},
-                    child: Text(
+                    child: const Text(
                       'Change password',
                       style: TextStyle(
                           color: kBackgroundColor
                       ),
                     ),
                     style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(kSplashScreenColor)
+                        backgroundColor: MaterialStateProperty.all(kPrimaryColor)
                     ),
                   ),
                 ),
                 Container(
                   width: size.width,
-                  padding: EdgeInsets.only(top: kDefaultPadding / 2),
+                  padding: const EdgeInsets.only(top: kDefaultPadding / 3),
                   child: TextButton(
                     onPressed: (){},
-                    child: Text(
+                    child: const Text(
                       'Change email',
                       style: TextStyle(
                           color: kBackgroundColor
                       ),
                     ),
                     style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(kSplashScreenColor)
+                        backgroundColor: MaterialStateProperty.all(kPrimaryColor)
                     ),
                   ),
                 )

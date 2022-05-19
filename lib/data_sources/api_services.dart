@@ -73,6 +73,36 @@ class ApiServices{
     });
   }
 
+  Future <List<Movie>> fetchFavoriteMovie() async{
+    String uri = await ApiAccount().getFavorite() ?? "";
+    return http
+        .get(Uri.parse(uri))
+        .then((http.Response response){
+      final String jsonBody = response.body;
+      int statusCode = response.statusCode;
+      if(statusCode != 200 || jsonBody == null){
+        print(response.reasonPhrase);
+        throw Exception('Error loaded api favorite');
+      } else {
+        print('Load api favorite');
+        final JsonDecoder decoder = JsonDecoder();
+        final movieListContainer = decoder.convert(jsonBody);
+        final List movieList = movieListContainer['results'];
+        return movieList.map((movieDetail) => Movie.fromJson(movieDetail)).toList();
+      }
+    });
+  }
+
+  Future<Movie> postFavoriteMovie(Map<String, dynamic> requestBody) async{
+    String uri = await ApiAccount().postFavorite() ?? "";
+    final response = await http.post(
+        Uri.parse(uri),
+        body: requestBody
+    );
+    print('post favorite: ' + response.body);
+    return Movie.fromJson({'response': response.body});
+  }
+
 
   Future <List<Actor>> fetchActor(String type, String id){
     return http
@@ -133,9 +163,21 @@ class ApiServices{
       final JsonDecoder decoder = JsonDecoder();
       final accountContainer = decoder.convert(jsonBody);
       Account account = Account.fromJson(accountContainer);
-      // print('get account: ' + accountContainer);
-      //log("AS 137"+(session.name ?? "NULL"));
       return account;
+    });
+  }
+
+  Future<int> getAccountId() async{
+    String uri = await ApiAccount().getAccount() ?? "";
+    return http
+        .get(Uri.parse(uri))
+        .then((http.Response response) {
+      final String jsonBody = response.body;
+      final JsonDecoder decoder = JsonDecoder();
+      final accountIdContainer = decoder.convert(jsonBody);
+      final int accountId = accountIdContainer['id'];
+      print('get id: ' + accountId.toString());
+      return accountId;
     });
   }
 }

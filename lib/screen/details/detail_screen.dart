@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:themoviedb_app/constants.dart';
+import 'package:themoviedb_app/data_sources/api_services.dart';
 import 'package:themoviedb_app/screen/build_appbar.dart';
 import 'package:themoviedb_app/screen/details/actor_list.dart';
 import 'package:themoviedb_app/screen/details/category.dart';
@@ -51,56 +52,32 @@ class _DetailScreenState extends State<DetailScreen> {
           false
         ),
         backgroundColor: kBoxColor,
-        bottomNavigationBar: Container(
-          height: size.height / 15,
-          color: kPrimaryColor,
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: GestureDetector(
-                  onTap: () {
-                    isOnTap1 = !isOnTap1;
-                    setState(() {
-
-                    });
-                    final dynamic _toolTip = _toolTipKey1.currentState;
-                    _toolTip.ensureTooltipVisible();
-                  },
-                  child: Tooltip(
-                      key: _toolTipKey1,
-                    padding: const EdgeInsets.all(10.0),
-                    margin: const EdgeInsets.only(bottom: 5.0),
-                    message: "Add to watch list",
-                    child: ImageIcon(
-                        const AssetImage("assets/icons/mark.png"),
-                        color: isOnTap1 ? Colors.white : Colors.yellow,
-                      )
-                  ),
-                ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            ApiServices().postFavoriteMovie({
+              'media_type': "movie",
+              'media_id': 550,
+              'favorite': true
+            });
+            showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: const Text('Message'),
+                content: const Text('Add favorite movie successful !'),
+                actions: [
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text('Close'))
+                ],
               ),
-              Expanded(
-                child: GestureDetector(
-                  onTap: () {
-                    isOnTap2 = !isOnTap2;
-                    setState(() {
-
-                    });
-                    final dynamic _toolTip = _toolTipKey2.currentState;
-                    _toolTip.ensureTooltipVisible();
-                  },
-                  child: Tooltip(
-                      key: _toolTipKey2,
-                      padding: const EdgeInsets.all(10.0),
-                      margin: const EdgeInsets.only(bottom: 5.0),
-                      message: "Mark as favorite",
-                      child: ImageIcon(
-                        const AssetImage("assets/icons/favorite.png"),
-                        color: isOnTap2 ? Colors.white : Colors.red,
-                      )
-                  ),
-                ),
-              ),
-            ],
+            );
+          },
+          backgroundColor: Colors.red,
+          child: const ImageIcon(
+              AssetImage("assets/icons/favorite.png"),
+              color: kBackgroundColor,
           )
         ),
         body: SingleChildScrollView(

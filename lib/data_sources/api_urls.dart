@@ -19,19 +19,29 @@ class ApiUrls{
     return Uri.parse('${endpoint}search/movie/$apiKey&language=en-US&query=$query&page=1&include_adult=false');
   }
 
-  // Future<Uri> API_ACCOUNT() async{
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   String? session = prefs.getString('sessionId');
-  //   print('izschjhzs $Uri.parse(${endpoint}account$apiKey&session_id=$session)');
-  //   return Uri.parse('${endpoint}account$apiKey&session_id=$session');
-  // }
+
 }
 
 class ApiAccount{
   Future<String?> getAccount() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? session = prefs.getString('sessionId');
-    print('session ${endpoint}account$apiKey&session_id=$session');
     return '${endpoint}account$apiKey&session_id=$session';
   }
+
+  Future<String?> getFavorite() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? session = prefs.getString('sessionId');
+    int? id = prefs.getInt('accountId');
+    return '${endpoint}account/$id/favorite/movies$apiKey&session_id=$session&language=en-US&sort_by=created_at.asc&page=1';
+  }
+
+  Future<String?> postFavorite() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? session = prefs.getString('sessionId');
+    int? id = prefs.getInt('accountId');
+    return '${endpoint}account/$id/favorite/movies$apiKey&session_id=$session';
+  }
 }
+//https://api.themoviedb.org/3/account/11558123/favorite?api_key=f46d76550cd8316769efdd6afe103c5b
+// &session_id=c93288098ae396f81b46bc192549d73780fbd2ee

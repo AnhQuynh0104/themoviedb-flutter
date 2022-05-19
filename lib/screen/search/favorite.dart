@@ -1,26 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:themoviedb_app/constants.dart';
 import 'package:themoviedb_app/data_sources/api_services.dart';
 import 'package:themoviedb_app/models/movie.dart';
 import 'package:themoviedb_app/screen/build_appbar.dart';
-import 'package:themoviedb_app/screen/details/detail_screen.dart';
 import 'package:themoviedb_app/screen/search/item.dart';
 
-class Search extends StatefulWidget {
-  const Search({Key? key, required this.query}) : super(key: key);
+class Favorite extends StatefulWidget {
+  const Favorite({Key? key}) : super(key: key);
 
-  final String query;
   @override
-  State<Search> createState() => _SearchState();
+  State<Favorite> createState() => _FavoriteState();
 }
 
-class _SearchState extends State<Search> {
+class _FavoriteState extends State<Favorite> {
   @override
   Widget build(BuildContext context) {
-    final Size size = MediaQuery.of(context).size;
     return Scaffold(
-      backgroundColor: kBackgroundColor,
-      appBar: buildAppbar(
+      appBar:  buildAppbar(
           IconButton(
             icon: Image.asset(
               'assets/icons/back.png',
@@ -29,24 +26,21 @@ class _SearchState extends State<Search> {
             onPressed: (){
               Navigator.pushNamed(context, '/home');
             },
-        ), false),
+          ), false
+      ),
+      backgroundColor: kBackgroundColor,
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
+        padding: const EdgeInsets.all(10.0),
         child: Column(
           children: <Widget>[
-            Container(
-              height: size.height / 15,
-              width: size.width,
-              margin: const EdgeInsets.only(bottom: 10.0),
-              padding: const EdgeInsets.all(12.0),
-              color: kSplashScreenColor,
-              child: const Text(
-                'Search Results',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18.0,
-                  fontWeight: FontWeight.bold
-                ),
+            Text(
+              'My Favorite List',
+              style: GoogleFonts.nunito(
+                  textStyle: Theme.of(context).textTheme.headline4,
+                  fontSize: 40,
+                  fontWeight: FontWeight.w700,
+                  color: kPrimaryColor
               ),
             ),
             SingleChildScrollView(
@@ -57,7 +51,7 @@ class _SearchState extends State<Search> {
                     width: MediaQuery.of(context).size.width,
                     height: MediaQuery.of(context).size.height,
                     child: FutureBuilder <List<Movie>>(
-                      future: ApiServices().fetchSearchMovie(widget.query.toString()),
+                      future: ApiServices().fetchFavoriteMovie(),
                       builder: (context, snapshot){
                         if((!snapshot.hasData) || (snapshot.hasError)){
                           return const Center(
@@ -87,5 +81,3 @@ class _SearchState extends State<Search> {
     );
   }
 }
-
-
