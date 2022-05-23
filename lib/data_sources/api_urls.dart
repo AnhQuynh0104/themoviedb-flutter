@@ -18,8 +18,6 @@ class ApiUrls{
   Uri API_SEARCH_MOVIES(String query){
     return Uri.parse('${endpoint}search/movie/$apiKey&language=en-US&query=$query&page=1&include_adult=false');
   }
-
-
 }
 
 class ApiAccount{
@@ -40,7 +38,7 @@ class ApiAccount{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? session = prefs.getString('sessionId');
     int? id = prefs.getInt('accountId');
-    return '${endpoint}account/$id/favorite/movies$apiKey&session_id=$session';
+    return '${endpoint}account/$id/favorite$apiKey&session_id=$session';
   }
 }
 //https://api.themoviedb.org/3/account/11558123/favorite?api_key=f46d76550cd8316769efdd6afe103c5b

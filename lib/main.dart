@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:themoviedb_app/constants.dart';
-import 'package:themoviedb_app/screen/details/check_auth.dart';
+import 'package:themoviedb_app/screen/login/check_auth.dart';
 import 'constants.dart';
 
 void main() => runApp(const MyApp());

@@ -55,9 +55,9 @@ class _DetailScreenState extends State<DetailScreen> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             ApiServices().postFavoriteMovie({
-              'media_type': "movie",
-              'media_id': 550,
-              'favorite': true
+              'media_type': 'movie',
+              'media_id': widget.id.toString(),
+              'favorite': 'true'
             });
             showDialog(
               context: context,

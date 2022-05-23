@@ -33,7 +33,7 @@ class _CheckAuthState extends State<CheckAuth> {
           routes: {
             '/': (context) => const Login(),
             '/home': (context) => const HomeScreen(),
-            'search': (context) => const Search(query: '')
+            '/search': (context) => const Search(query: '')
           },
         )
     );

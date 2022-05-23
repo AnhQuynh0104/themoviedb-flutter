@@ -16,6 +16,7 @@ class Favorite extends StatefulWidget {
 class _FavoriteState extends State<Favorite> {
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar:  buildAppbar(
           IconButton(
@@ -31,16 +32,21 @@ class _FavoriteState extends State<Favorite> {
       backgroundColor: kBackgroundColor,
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
-        padding: const EdgeInsets.all(10.0),
         child: Column(
           children: <Widget>[
-            Text(
-              'My Favorite List',
-              style: GoogleFonts.nunito(
-                  textStyle: Theme.of(context).textTheme.headline4,
-                  fontSize: 40,
-                  fontWeight: FontWeight.w700,
-                  color: kPrimaryColor
+            Container(
+              height: size.height / 15,
+              width: size.width,
+              margin: const EdgeInsets.only(bottom: 10.0),
+              padding: const EdgeInsets.all(12.0),
+              color: kSplashScreenColor,
+              child: const Text(
+                'My Favorite',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold
+                ),
               ),
             ),
             SingleChildScrollView(
@@ -48,8 +54,8 @@ class _FavoriteState extends State<Favorite> {
               child: Column(
                 children: <Widget>[
                   SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height,
+                    width: size.width,
+                    height: size.height * 1.2,
                     child: FutureBuilder <List<Movie>>(
                       future: ApiServices().fetchFavoriteMovie(),
                       builder: (context, snapshot){
@@ -58,14 +64,15 @@ class _FavoriteState extends State<Favorite> {
                             child: CircularProgressIndicator(),
                           );
                         }
-                        List<Movie>? searchList = snapshot.data;
+                        List<Movie>? favoriteList = snapshot.data;
                         return ListView.builder(
                           scrollDirection: Axis.vertical,
+                          physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
-                          itemCount: searchList!.length,
+                          itemCount: favoriteList!.length,
                           itemBuilder: (BuildContext context, int index){
                             return Item(
-                                movie: searchList[index]
+                                movie: favoriteList[index]
                             );
                           },
                         );

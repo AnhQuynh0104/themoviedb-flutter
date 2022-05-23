@@ -11,6 +11,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState>{
     on<AppStart>(
         (event, emit) async {
           emit(LoginInitial());
+          try{
+            final prefs = await SharedPreferences.getInstance();
+            if(prefs.getString('sessionId').isEmpty)
+          } catch(e){
+            print("abc failed");
+          }
         }
     );
     on<LoginButtonPressed>(

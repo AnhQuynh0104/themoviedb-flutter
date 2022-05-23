@@ -54,8 +54,8 @@ class _SearchState extends State<Search> {
               child: Column(
                 children: <Widget>[
                   SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height,
+                    width: size.width,
+                    height: size.height,
                     child: FutureBuilder <List<Movie>>(
                       future: ApiServices().fetchSearchMovie(widget.query.toString()),
                       builder: (context, snapshot){
@@ -67,6 +67,7 @@ class _SearchState extends State<Search> {
                         List<Movie>? searchList = snapshot.data;
                         return ListView.builder(
                           scrollDirection: Axis.vertical,
+                          physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           itemCount: searchList!.length,
                           itemBuilder: (BuildContext context, int index){
