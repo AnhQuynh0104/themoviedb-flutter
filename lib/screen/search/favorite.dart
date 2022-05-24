@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:themoviedb_app/constants.dart';
 import 'package:themoviedb_app/data_sources/api_services.dart';
 import 'package:themoviedb_app/models/movie.dart';
@@ -55,7 +54,7 @@ class _FavoriteState extends State<Favorite> {
                 children: <Widget>[
                   SizedBox(
                     width: size.width,
-                    height: size.height * 1.2,
+                    height: size.height,
                     child: FutureBuilder <List<Movie>>(
                       future: ApiServices().fetchFavoriteMovie(),
                       builder: (context, snapshot){

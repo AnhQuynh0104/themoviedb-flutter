@@ -1,6 +1,8 @@
+
 import 'package:flutter/material.dart';
 import 'package:themoviedb_app/constants.dart';
 import 'package:themoviedb_app/screen/search/body.dart';
+import 'package:themoviedb_app/sqlite_helper/helper.dart';
 
 class MediaDiscover extends StatefulWidget {
   const MediaDiscover({
@@ -25,7 +27,7 @@ class _MediaDiscoverState extends State<MediaDiscover> {
           children: <Widget>[
             Image.network(
               'https://www.themoviedb.org/t/p/w880_and_h600_multi_faces_filter'
-                  '(duotone,032541,01b4e4)/8bcoRX3hQRHufLPSDREdvr3YMXx.jpg',
+              '(duotone,032541,01b4e4)/8bcoRX3hQRHufLPSDREdvr3YMXx.jpg',
               fit: BoxFit.cover,
               height: 300,
             ),
@@ -43,7 +45,7 @@ class _MediaDiscoverState extends State<MediaDiscover> {
           ],
         ),
         Padding(
-            padding: const EdgeInsets.all(kDefaultPadding),
+          padding: const EdgeInsets.all(kDefaultPadding),
           child: Column(
             children: <Widget>[
               RichText(
@@ -100,11 +102,12 @@ class _MediaDiscoverState extends State<MediaDiscover> {
                         ),
                       ),
                       child: MaterialButton(
-                        onPressed: (){
+                        onPressed: () async {
                           Navigator.push(
                               context,
                               MaterialPageRoute(builder: (context) => Search(query: searchInput.text))
                           );
+                          await SQLHelper.createItem(searchInput.text);
                         },
                         minWidth: 100.0,
                         child: const Text(

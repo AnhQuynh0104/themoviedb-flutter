@@ -4,6 +4,7 @@ import 'package:themoviedb_app/data_sources/api_services.dart';
 import 'package:themoviedb_app/models/movie.dart';
 import 'package:themoviedb_app/screen/build_appbar.dart';
 import 'package:themoviedb_app/screen/details/detail_screen.dart';
+import 'package:themoviedb_app/screen/search/history.dart';
 import 'package:themoviedb_app/screen/search/item.dart';
 
 class Search extends StatefulWidget {
@@ -48,6 +49,17 @@ class _SearchState extends State<Search> {
                   fontWeight: FontWeight.bold
                 ),
               ),
+            ),
+            GestureDetector(
+              onTap: (){
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => History(name: widget.query.toString()))
+                );
+              },
+              child: const Text(
+                    'View search history...'
+                  )
             ),
             SingleChildScrollView(
               scrollDirection: Axis.vertical,
